@@ -1,0 +1,14 @@
+<span>
+    <button ng-class="{active: isActive(country.code)}" class="btn btn-margin-left btn-info" ng-click="loadMovies(country.code)" ng-repeat="country in countries">{{country.name}}</button>
+    <input placeholder="Buscar" name="query" id="query" type="text" ng-model="query"/>
+</span>
+<hr/>
+<div class="pin-layout">
+    <div ng-repeat="movie in movies | filter:query">
+        <div class="thumbnail">
+            <img class="cover pull-right" width="90" ng-src="{{movie.posters.detailed}}" alt="{{movie.title}}">
+            <h3 class="caption">{{movie.title}}</h3>
+            <p>{{movie.synopsis}}</p>
+        </div>
+    </div>
+</div>

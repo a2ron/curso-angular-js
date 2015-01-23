@@ -1,0 +1,9 @@
+[
+    {"no": "1","nombre":"Aarón","fidelidad":3,"fechaUnion":"3/5/10","tipoMiembro":"Free"},
+    {"no": "3","nombre":"Juan","fidelidad":1,"fechaUnion":"3/5/11","tipoMiembro":"Premium"},
+    {"no": "4","nombre":"Antonio","fidelidad":6,"fechaUnion":"4/5/10","tipoMiembro":"Free"},
+    {"no": "5","nombre":"Eusebio","fidelidad":2,"fechaUnion":"3/1/10","tipoMiembro":"Premium"},
+    {"no": "6","nombre":"Isidro","fidelidad":1,"fechaUnion":"1/7/10","tipoMiembro":"Free"},
+    {"no": "7","nombre":"Lorenzo","fidelidad":8,"fechaUnion":"5/5/13","tipoMiembro":"Free"},
+    {"no": "8","nombre":"Fran","fidelidad":7,"fechaUnion":"2/5/12","tipoMiembro":"Premium"}
+]

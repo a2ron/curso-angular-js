@@ -1,0 +1,27 @@
+<div class="container">
+    <h2> Mis tareas </h2>
+    <!-- form -->
+    <form role="form" ng-submit="addTarea()">
+        <div class="row">
+            <div class="input-group">
+                <input type="text" ng-model="tarea" placeholder="Nueva Tarea" class="form-control">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-primary" value="Añadir">
+                </span>
+            </div>
+        </div>
+    </form>
+    <br/>
+    <!-- tareas -->
+    <div ui-sortable ng-model="tareas">
+        <p class="input-group" 
+           style="padding:5px 10px;cursor:move;" 
+           ng-repeat="tarea in tareas| orderBy : '' : true">
+            <input type="text" ng-model="tarea" class="form-control"/>
+            <span class="input-group-btn">
+                <button class="btn btn-danger" ng-click="eliminarTarea($index)" aria-label="Eliminar">X</button>
+            </span>
+
+        </p>
+    </div>
+</div>

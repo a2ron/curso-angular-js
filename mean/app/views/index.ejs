@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <% if(userFullName) { %>
+        <h1>Hola <%= userFullName  %></h1>
+        <a href="/signout">Cerrar Sesión</a>
+        <% } else { %>
+        <a href="/signup">Crear Cuenta</a>
+        <a href="/signin">Entrar</a>
+        <%  }  %>
+
+        <br/>
+        <img width="400" height="200" src="img/sierra.jpg" alt="Logo">
+
+    </body>
+</html>

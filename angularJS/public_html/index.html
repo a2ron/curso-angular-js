@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+Aarón Rosas - aarr90@gmail.com
+-->
+<html ng-app>
+    <head>
+        <title>AngularJS | Tienda | Caja</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body ng-controller="CajaController">
+
+        Buscar: <input  ng-model="buscar">
+        <input ng-hide="mas1Visibility" ng-click="mas1Visi()" type="button" value="+"/>
+        <input ng-show="mas1Visibility" ng-click="save();mas1Visi();" type="button" value="Añadir 1"/>
+        <hr/>
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Cantidad</td>
+                    <td>Descuento</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in caja| orderBy:'id' | filter:buscar:strict">
+                    <td>{{item.id}}</td>
+                    <td>{{item.cantidad}}</td>
+                    <td>{{item.descuento}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- scripts -->
+        <script src="js/angular.js/angular.js" type="text/javascript"></script>
+        <script src="js/js.js" type="text/javascript"></script>
+    </body>
+
+</html>

@@ -1,0 +1,17 @@
+
+<div class="modal-header">
+
+    <button class="close" ng-click="cancel()" data-dimiss="modal" aria-hidden="true">&times;</button> 
+
+    <h1>Añadir un miembro</h1>
+
+</div>
+
+<div class="modal-body">
+    <label>Nombre</label><input type="text" ng-model="nuevoMiembro.nombre"/>
+    <label>Tipo de Miembro</label><input type="text" ng-model="nuevoMiembro.tipoMiembro"/>
+    <label>Fidelidad</label><input type="number" ng-model="nuevoMiembro.fidelidad"/>
+    <label>Fecha de Unión</label><input type="date" ng-model="nuevoMiembro.fechaUnion"/>
+    <br/> 
+   <button class="btn btn-success" ng-click="salvarNuevoMiembro()" >Salvar Miembro</button> 
+</div>

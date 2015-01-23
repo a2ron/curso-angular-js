@@ -1,0 +1,22 @@
+<carousel interval="setInverval">
+    <slide ng-repeat="slide in slides">
+        <img class="carousel-image" ng-src="{{slide.image}}"/>
+        <div class="carousel-caption">
+            <h2>{{slide.title}}</h2>
+            <p>{{slide.text}}</p>
+        </div>
+    </slide>
+</carousel>
+
+<div class="nuestra-propuesta">
+    <h1>Bienvenido a Vida Sana</h1>
+    <p> Este es un ejemplo de como podemos usar angularJS</p>
+</div>
+<br>
+<div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-4" ng-repeat="block in contenido">
+        <img class="img-circle" ng-src="{{block.img}}">
+        <h3>{{block.title}}</h3>
+        <p>{{block.sumario}}<p>
+    </div>
+</div>

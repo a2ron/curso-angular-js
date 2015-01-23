@@ -1,0 +1,22 @@
+/*
+Aarón Rosas - aarr90@gmail.com
+*/
+table
+{
+    width:100%;
+    border:1px solid black;
+    border-radius: 3px;
+}
+thead{
+    font-weight: bold;
+    text-shadow: 0px 1px 1px lightblue;
+
+}
+tbody tr:hover
+{
+    background-color:lightgoldenrodyellow;
+}
+tbody td:hover
+{
+    color:tomato;
+}

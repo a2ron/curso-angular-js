@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <% for(var i in messages) { %>
+        <div class="flash"><%= messages[i] %></div>
+        <% } %>
+
+        <form action="/signin" method="post">
+            <div>
+                <label>Usuario</label>
+                <input type="text" name="username" />
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input type="password" name="password" />
+            </div>
+            <input type="submit" value="Entrar" />
+            <a href="/oauth/google">Iniciar sesión con Google</a>
+        </form>
+    </body>
+</html>

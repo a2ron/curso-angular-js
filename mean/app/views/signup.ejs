@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <% for(var i in messages) { %>
+        <div class="flash"><%= messages[i] %></div>
+        <% } %>
+
+        <form action="/signup" method="post">
+            <div>
+                <label>Nombre</label>
+                <input type="text" name="nombre" />
+            </div>
+            <div>
+                <label>Apellido</label>
+                <input type="text" name="apellidos" />
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="text" name="email" />
+            </div>
+            <div>
+                <label>Nombre de usuario</label>
+                <input type="text" name="username" />
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input type="password" name="password" />
+            </div>
+            <input type="submit" value="Crear Cuenta" />
+            <a href="/oauth/google">Iniciar sesión con Google</a>
+        </form>
+    </body>
+</html>

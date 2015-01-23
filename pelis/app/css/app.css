@@ -1,0 +1,66 @@
+/* app css stylesheet */
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+.btn-margin-left
+{
+    margin-left:5px;
+}
+
+.pin-layout{
+    column-count:3;//numero de columnas
+    column-gap: 0px;//espacio entre columnas
+    -moz-colum-count:3;
+    -moz-colum-gap:0px;
+    -webkit-column-count:3;
+    -webkit-colum-gap:0px;
+
+
+}
+.thumbnail{
+    overflow: auto;
+    display:inline-block!important;
+    width:100%;
+    margin:5px;
+    padding:15px!important;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #ccc;
+    background: #fff;
+}
+.thumbnail img.cover
+{
+    padding:5px;
+}
+
+.brand{
+    color:#ff6600;
+    font-size:50px;
+    font-family: georgia;
+}
