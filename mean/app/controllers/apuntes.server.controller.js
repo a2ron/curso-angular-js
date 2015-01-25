@@ -1,13 +1,14 @@
 'use strict';
 
 //Cargar el modelo
-var Apunte = require('mongoose').model('Apunte');
+var Model = require('mongoose').model('Apunte');
+var reqModel = 'apunte';
 
 //metodo CREATE
 exports.create = function(req, res, next)
 {
     //crear la nueva instancia
-    var apunte = new Apunte(req.body);
+    var apunte = new Model(req.body);
     //guardarla en BD
     apunte.save(function(err)
     {
@@ -22,12 +23,12 @@ exports.create = function(req, res, next)
 //metodo list
 exports.list = function(req, res, next)
 {
-    Apunte.find({}, 'descripcion', function(err, apuntes)
+    Model.find().sort('-created').populate('idCategoriaApunte').exec(function(err, objs)
     {
         if (err)
             return next(err);
         else
-            res.json(apuntes);
+            res.json(objs);
     });
 };
 
@@ -36,10 +37,10 @@ exports.read = function(req, res)
     res.json(req.apunte);
 };
 
-//metodo para obtener un apunte
-exports.apunteById = function(req, res, next, id)
+//metodo para obtener
+exports.getById = function(req, res, next, id)
 {
-    Apunte.findOne({_id: id}, function(err, apunte)
+    Model.findOne({_id: id}, function(err, apunte)
     {
         if (err)
             return next(err);
@@ -50,10 +51,10 @@ exports.apunteById = function(req, res, next, id)
     });
 };
 
-//metodo para actualizar un apunte
+//metodo para actualizar
 exports.update = function(req, res, next)
 {
-    Apunte.findByIdAndUpdate(req.apunte.id, req.body, function(err, apunte)
+    Model.findByIdAndUpdate(req.apunte.id, req.body, function(err, apunte)
     {
         if (err)
             return next(err);
@@ -66,14 +67,27 @@ exports.update = function(req, res, next)
 //metodo para borrar un apunte
 exports.delete = function(req, res, next)
 {
-    req.apunte.remove(function(err)
+    var obj = req[reqModel];
+    obj.remove(function(err)
     {
         if (err)
             return next(err);
         else {
-            res.json(apunte);
+            res.json(obj);
         }
     });
 };
 
+//middleware para permisos
+/*exports.hasAuthorization = function(req, res, next)
+{
+    var obj = req[reqModel];
+    if (!req.user)
+    {
+        return res.status(403).send({
+            message: 'Debe iniciar sesión'
+        });
+    }
 
+    next();
+};*/

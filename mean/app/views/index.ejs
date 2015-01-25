@@ -4,8 +4,8 @@
         <title><%= title %></title>
     </head>
     <body>
-        <% if(userFullName) { %>
-        <h1>Hola <%= userFullName  %></h1>
+        <% if(nombre) { %>
+        <h1>Hola <%= nombre  %></h1>
         <a href="/signout">Cerrar Sesión</a>
         <% } else { %>
         <a href="/signup">Crear Cuenta</a>
@@ -15,15 +15,20 @@
         <br/>
 
         <section ng-view></section>
+        <script type="text/javascript">
+            window.user = < % - user || 'null' % > ;</script>
 
         <!-- SCRIPTS -->
         <script src="/lib/angular/angular.js" type="text/javascript"></script>
         <script src="/lib/angular-route/angular-route.js" type="text/javascript"></script>
+        <script src="/lib/angular-resource/angular-resource.js" type="text/javascript"></script>
 
         <script src="/application.js" type="text/javascript"></script>
         <script src="/examples/example.client.module.js" type="text/javascript"></script>
         <script src="/examples/controllers/example.client.controller.js" type="text/javascript"></script>
         <script src="/examples/config/example.client.routes.js" type="text/javascript"></script>
+        <script src="/users/users.client.module.js" type="text/javascript"></script>
+        <script src="/users/services/authentication.client.service.js" type="text/javascript"></script>
 
     </body>
 </html>

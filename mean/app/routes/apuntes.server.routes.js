@@ -1,17 +1,25 @@
 'use strict';
 
-//Cargar el controller
-var apuntes = require('../../app/controllers/apuntes.server.controller');
+//Cargar controladores necesarios
+var controller = require('../../app/controllers/apuntes.server.controller');
+var cu = require('../../app/controllers/usuarios.server.controller');
+
+var paramId = 'apunteId';
+var path = '/apuntes';
 
 module.exports = function(app)
 {
-    app.route('/apuntes')
-            .post(apuntes.create)
-            .get(apuntes.list);
-    app.route('/apuntes/:apunteId')
-            .get(apuntes.read)
-            .put(apuntes.update)
-            .delete(apuntes.delete);
-    //así, la funcion 'apunteById' se ejecutara cuando se necesite el parametro
-    app.param('apunteId', apuntes.apunteById);
+    app.route(path)
+            .post(cu.requiresLogin, controller.create)
+            .get(controller.list);
+
+    //rutas parametrizadas
+    app.route(path + '/:apunteId')
+            .get(controller.read)
+            .put(cu.requiresLogin, controller.update)
+            .delete(cu.requiresLogin, controller.delete);
+
+    //así, la funcion 'getById' se ejecutara cuando se necesite el parametro
+    // (poner aqui la seguridad requiresLogin??  )
+    app.param(paramId, controller.getById);
 };
