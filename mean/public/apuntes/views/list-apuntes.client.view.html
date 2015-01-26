@@ -1,0 +1,15 @@
+<section data-ng-controller="ApuntesController" data-ng-init="find()">
+    <h1>Apuntes</h1>
+
+    <ul>
+        <li data-ng-repeat="apunte in apuntes">
+            <a data-ng-href="#!/apuntes/{{apunte._id}}" data-ng-bind="apunte.titulo" ></a>
+            <br/>
+        </li>
+    </ul>
+    <div data-ng-hide="!apuntes || aputes.lenght">
+        Aún no hay apuntes
+    </div>
+    <a href="#!/apuntes/crear">Crear</a>
+    
+</section>

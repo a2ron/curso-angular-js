@@ -1,0 +1,26 @@
+<section data-ng-controller="ApuntesController">
+    <h1>Nuevo Apunte</h1>
+    <form data-ng-submit="create()" novalidate>
+        <div>
+            <label for="titulo">Titulo</label>
+            <div>
+                <input type="text" data-ng-model="titulo" id="titulo" placeholder="Titulo" required>
+            </div>
+        </div>
+
+        <div>
+            <label for="descripcion">Descripción</label>
+            <div>
+                <input type="text" data-ng-model="descripcion" id="descripcion" placeholder="Descripción" required>
+            </div>
+        </div>
+        <div>
+            <input type="submit">
+        </div>
+
+        <!-- MENSAJE DE ERROR -->
+        <div data-ng-show="error" >
+            <strong data-ng-bind="error"></strong>
+        </div>
+    </form>
+</section>

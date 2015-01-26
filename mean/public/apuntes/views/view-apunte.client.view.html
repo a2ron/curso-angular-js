@@ -1,0 +1,15 @@
+<section data-ng-controller="ApuntesController" data-ng-init="findOne()">
+    <h1 data-ng-bind="apunte.titulo"></h1>    
+
+    <div>
+        <a href="/#!/apuntes/{{apunte._id}}/edit">Editar</a>
+        <a href="/#" data-ng-click="delete();">Borrar</a>
+    </div>
+
+    <small>
+        <em data-ng-bind="apunte.createdOn"></em>
+    </small>
+
+    <p data-ng-bind="apunte.descripcion"></p>
+
+</section>
