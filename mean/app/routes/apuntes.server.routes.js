@@ -5,7 +5,7 @@ var controller = require('../../app/controllers/apuntes.server.controller');
 var cu = require('../../app/controllers/usuarios.server.controller');
 
 var paramId = 'apunteId';
-var path = '/apuntes';
+var path = '/api/apuntes';
 
 module.exports = function(app)
 {
@@ -14,7 +14,7 @@ module.exports = function(app)
             .get(controller.list);
 
     //rutas parametrizadas
-    app.route(path + '/:apunteId')
+    app.route(path + '/:' + paramId)
             .get(controller.read)
             .put(cu.requiresLogin, controller.update)
             .delete(cu.requiresLogin, controller.delete);
