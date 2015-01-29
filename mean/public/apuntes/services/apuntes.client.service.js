@@ -9,3 +9,11 @@ angular.module('apuntes').factory('Apuntes', ['$resource', function($resource) {
             }
         });
     }]);
+
+angular.module('apuntes').factory('ApuntesPath', function() {
+    return 'apuntes';
+});
+
+angular.module('apuntes').factory('ApuntesId', function() {
+    return 'apunteId';
+});

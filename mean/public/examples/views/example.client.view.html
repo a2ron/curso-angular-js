@@ -3,12 +3,11 @@
         <a href="/signup">Crear Cuenta</a>
         <a href="/signin">Identificarse</a>
     </div>
-    <div data-ng-show="!authentication.user">
+    <div data-ng-show="authentication.user">
         <h1>Hola <span data-ng-bind="authentication.user.nombre"></span></h1>
         <a href="/signout">Cerrar Sesión</a>
         <ul>
-            <li><a href="/#!/apuntes">Listar Artículos</a></li>
-            <li><a href="/#!/apuntes/crear">Crear Artículo</a></li>
+            <li><a href="/#!/apuntes">Artículos</a></li>
         </ul>
     </div>
 </section>

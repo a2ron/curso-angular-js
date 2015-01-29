@@ -11,7 +11,7 @@ var ApunteSchema = new Schema({
     titulo: {
         type: String,
         default: '',
-        trim: true, 
+        trim: true,
         required: 'El título del Apunte es obligatorio'
     },
     descripcion: {
@@ -22,6 +22,7 @@ var ApunteSchema = new Schema({
     idCategoriaApunte: {
         type: Schema.ObjectId,
         ref: 'CategoriaApunte'
+//        required: 'La Categoría del Apunte es obligatoria'
     },
     importe: Number
 });

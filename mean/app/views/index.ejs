@@ -4,11 +4,14 @@
         <title><%= title %></title>
     </head>
     <body>
+
+        <a href="#!/">HOME</a>
         <section ng-view></section>
         <script type="text/javascript">
             window.user = <%- user || 'null' %> ;</script>
 
         <!-- SCRIPTS -->
+        <script src="/lib/myLib.js" type="text/javascript"></script>
         <script src="/lib/angular/angular.js" type="text/javascript"></script>
         <script src="/lib/angular-route/angular-route.js" type="text/javascript"></script>
         <script src="/lib/angular-resource/angular-resource.js" type="text/javascript"></script>
