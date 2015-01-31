@@ -8,7 +8,7 @@ angular.module('apuntes', [])
                     }
                 });
             }])
-        .factory('ApuntesMeta', function() {
+        .factory('ApuntesMETA', function() {
             return {
                 path: 'apuntes',
                 id: 'apunteId'
@@ -35,6 +35,6 @@ angular.module('apuntes', [])
                             templateUrl: 'views/view-apunte.client.view.html'
                         }).
                         when('/apuntes/:apunteId/edit', {
-                            templateUrl: 'views/edit-apuntes.client.view.html'
+                            templateUrl: 'views/edit-apunte.client.view.html'
                         });
             }]);

@@ -6,26 +6,29 @@
     </head>
     <body>
 
-        <section ng-controller="IndexController">
-            <div data-ng-show="!user">
-                <a href="/signup">Crear Cuenta</a>
-                <a href="/signin">Identificarse</a>
-            </div>
-            <div data-ng-show="user">
-                <a class="pull-right" href="/signout">Cerrar Sesión</a>
-                <h1>Hola <span>{{user.nombre}} {{user.apellidos}}</span></h1>
-                <ul>
-                    <li><a href="/#!/apuntes">Apuntes</a></li>
-                </ul>
-            </div>
-        </section> 
+        <div class="container">
+            <section ng-controller="IndexController">
+                <div data-ng-show="!user">
+                    <a href="/signup">Crear Cuenta</a>
+                    <a href="/signin">Identificarse</a>
+                </div>
+                <div data-ng-show="user">
+                    <a class="pull-right" href="/signout">Cerrar Sesión</a>
+                    <h1>Hola <span>{{user.nombre}} {{user.apellidos}}</span></h1>
+                    <ul>
+                        <li><a href="/#!/apuntes">Apuntes</a></li>
+                    </ul>
+                </div>
+            </section> 
 
-        <section ng-view></section>
+            <section ng-view></section>
+
+        </div>
+
+        <!-- SCRIPTS -->
 
         <script type="text/javascript">
             window.user = <%- user || 'null' %> ;</script>
-
-        <!-- SCRIPTS -->
 
         <!-- LIBRARYS -->
         <script src="/lib/angular/angular.js" type="text/javascript"></script>
