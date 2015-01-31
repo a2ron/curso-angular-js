@@ -1,8 +1,6 @@
 
-function controller($scope, $routeParams, $location, Authentication, Factory, Path, Id)
+function controller($scope, $routeParams, $location, Factory, Meta)
 {
-    $scope.authentication = Authentication;
-
     $scope.create = function()
     {
         var obj = new Factory({
@@ -12,7 +10,7 @@ function controller($scope, $routeParams, $location, Authentication, Factory, Pa
 
         obj.$save(function(response)
         {
-            $location.path(Path + '/' + response._id);
+            $location.path(Meta.path + '/' + response._id);
 
         }, function(errorResponse) {
             $scope.error = 'Error al guardar';
@@ -28,7 +26,7 @@ function controller($scope, $routeParams, $location, Authentication, Factory, Pa
     $scope.findOne = function()
     {
         var p = {};
-        p[Id] = $routeParams[Id];
+        p[Meta.id] = $routeParams[Meta.id];
         $scope.obj = Factory.get(p);
     };
 
@@ -36,7 +34,7 @@ function controller($scope, $routeParams, $location, Authentication, Factory, Pa
     {
         $scope.obj.$update(function(response)
         {
-            $location.path(Path + '/' + $scope.obj._id);
+            $location.path(Meta.path + '/' + $scope.obj._id);
 
         }, function(errorResponse) {
             $scope.error = 'Error al guardar';
@@ -61,7 +59,7 @@ function controller($scope, $routeParams, $location, Authentication, Factory, Pa
         } else {
             $scope.obj.$remove(function()
             {
-                $location.path(Path);
+                $location.path(Meta.path);
 
             });
         }
