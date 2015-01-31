@@ -2,10 +2,9 @@
 <html> 
     <head>
         <title><%= title %></title>
+        <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-
-        <a href="#!/">HOME</a>
 
         <section ng-controller="IndexController">
             <div data-ng-show="!user">
@@ -13,8 +12,8 @@
                 <a href="/signin">Identificarse</a>
             </div>
             <div data-ng-show="user">
-                <h1>Hola <span data-ng-bind="user.nombre"></span></h1>
-                <a href="/signout">Cerrar Sesión</a>
+                <a class="pull-right" href="/signout">Cerrar Sesión</a>
+                <h1>Hola <span>{{user.nombre}} {{user.apellidos}}</span></h1>
                 <ul>
                     <li><a href="/#!/apuntes">Apuntes</a></li>
                 </ul>
@@ -24,7 +23,7 @@
         <section ng-view></section>
 
         <script type="text/javascript">
-            window.user = <%- user || 'null' %> ; ;</script>
+            window.user = <%- user || 'null' %> ;</script>
 
         <!-- SCRIPTS -->
 
