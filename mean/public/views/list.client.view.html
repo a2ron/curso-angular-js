@@ -1,0 +1,15 @@
+<section data-ng-init="find()">
+    <h1>{{params.name}}</h1>
+    <a href="#!/{{params.path}}/crear">Crear</a>
+
+    <ul>
+        <li data-ng-repeat="obj in objs">
+            <a data-ng-href="#!/{{params.path}}/{{obj._id}}" data-ng-bind="obj.titulo" ></a>
+            <br/>
+        </li>
+    </ul>
+    <div data-ng-hide="!objs || objs.length">
+        Aún no hay {{params.name}}
+    </div>
+
+</section>

@@ -1,5 +1,5 @@
-<section data-ng-controller="ApuntesController" data-ng-init="findOne()">
-    <h1>Editar Apunte</h1>
+<section data-ng-init="findOne()">
+    <h1>Editar {{params.nameSingular}}</h1>
     <form data-ng-submit="update()" novalidate>
         <div>
             <label for="titulo">Titulo</label>

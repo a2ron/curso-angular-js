@@ -1,6 +1,8 @@
 
-function controller($scope, $routeParams, $location, Factory, Meta)
+function controllerBase($scope, $routeParams, $location, Factory, Meta)
 {
+    $scope.params = Meta;
+
     $scope.create = function()
     {
         var obj = new Factory({
@@ -64,6 +66,29 @@ function controller($scope, $routeParams, $location, Factory, Meta)
             });
         }
     };
+}
 
-
+function moduleCrudBase(p)
+{
+    return angular.module(p.nameModule, [])
+            .factory(p.name, ['$resource', function($resource) {
+                    var params = {};
+                    params[p.id] = '@_id';
+                    return $resource(p.pathAPI, params, {
+                        update: {
+                            method: 'PUT'
+                        }
+                    });
+                }])
+            .factory(p.name + 'META', function() {
+                return p;
+            })
+            .controller(p.nameController, [
+                '$scope',
+                '$routeParams',
+                '$location',
+                p.name,
+                p.name + 'META',
+                controllerBase
+            ]);
 }

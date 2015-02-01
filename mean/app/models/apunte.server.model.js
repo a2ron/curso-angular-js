@@ -21,8 +21,8 @@ var ApunteSchema = new Schema({
     },
     idCategoriaApunte: {
         type: Schema.ObjectId,
-        ref: 'CategoriaApunte'
-//        required: 'La Categoría del Apunte es obligatoria'
+        ref: 'CategoriaApunte',
+        required: 'La Categoría del Apunte es obligatoria'
     },
     importe: Number
 });

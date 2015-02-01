@@ -50,6 +50,7 @@ module.exports = function()
     //rutas de la app
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/apuntes.server.routes.js')(app);
+    require('../app/routes/categoriaApuntes.server.routes.js')(app);
     require('../app/routes/usuarios.server.routes.js')(app);
 
     //para usar archivos estáticos

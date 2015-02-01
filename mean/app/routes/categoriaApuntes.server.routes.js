@@ -1,12 +1,12 @@
 'use strict';
 
 //Cargar controladores necesarios
-var controller = require('../../app/controllers/apuntes.server.controller');
+var controller = require('../../app/controllers/categoriaApunte.server.controller');
 var cu = require('../../app/controllers/usuarios.server.controller');
 var crudBase = require('../../app/routes/crudBase.server.routes.js');
 
-var paramId = 'apunteId';
-var path = '/api/apuntes';
+var paramId = 'categoriaApunteId';
+var path = '/api/categorias';
 
 module.exports = function(app)
 {

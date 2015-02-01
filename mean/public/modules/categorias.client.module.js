@@ -1,16 +1,16 @@
 moduleCrudBase({
-    nameModule: 'apuntes',
-    path: 'apuntes',
-    id: 'apunteId',
-    pathAPI: 'api/apuntes/:apunteId',
-    name: 'Apuntes',
-    nameSingular: 'Apunte',
-    nameController: 'ApuntesController'
+    nameModule: 'categoriasApuntes',
+    path: 'categorias',
+    id: 'categoriaApunteId',
+    pathAPI: 'api/categorias/:categoriaApunteId',
+    name: 'Categorías',
+    nameSingular: 'Categoría',
+    nameController: 'CategoriasApuntesController'
 }).config(['$routeProvider',
     function($routeProvider) {
-        var path = 'apuntes';
-        var id = 'apunteId';
-        var nameController = 'ApuntesController';
+        var nameController = 'CategoriasApuntesController';
+        var path = 'categorias';
+        var id = 'categoriaApunteId';
 
         $routeProvider.
                 when('/' + path, {

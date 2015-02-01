@@ -1,4 +1,4 @@
-<section data-ng-controller="ApuntesController" data-ng-init="findOne()">
+<section data-ng-init="findOne()">
     <h1> 
         <span data-ng-bind="obj.titulo"></span> 
         <small>
@@ -8,8 +8,8 @@
     <p data-ng-bind="obj.descripcion"></p>
     <pre data-ng-bind="obj | json"></pre>
     <div>
-        <a href="/#!/apuntes/">Lista</a>
-        <a href="/#!/apuntes/{{obj._id}}/edit">Editar</a>
+        <a href="/#!/{{params.path}}/">Lista</a>
+        <a href="/#!/{{params.path}}/{{obj._id}}/edit">Editar</a>
         <a href="/#" data-ng-click="delete();">Borrar</a>
     </div>
 

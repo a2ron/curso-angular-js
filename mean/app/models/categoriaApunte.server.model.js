@@ -11,12 +11,13 @@ var CategoriaApunteSchema = new Schema({
     creator: {
         type: Schema.ObjectId,
         ref: 'Usuario'
+//        required: 'El Usuario creador de la Categoría es obligatorio'
     },
     titulo: {
         type: String,
         default: '',
         trim: true,
-        required: 'El título de la Categoría es obligatoria'
+        required: 'El Título de la Categoría es obligatoria'
     },
     descripcion: {
         type: String,
