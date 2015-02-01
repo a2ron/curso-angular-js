@@ -1,32 +1,33 @@
-moduleCrudBase({
+var params = {
     nameModule: 'categoriasApuntes',
     path: 'categorias',
     id: 'categoriaApunteId',
     pathAPI: 'api/categorias/:categoriaApunteId',
-    name: 'Categorías',
-    nameSingular: 'Categoría',
-    nameController: 'CategoriasApuntesController'
-}).config(['$routeProvider',
-    function($routeProvider) {
-        var nameController = 'CategoriasApuntesController';
-        var path = 'categorias';
-        var id = 'categoriaApunteId';
+    viewParams: {
+        name: 'Categorías',
+        nameSingular: 'Categoría',
+        path: 'categorias'//redundante pero necesario
+    }
+};
 
-        $routeProvider.
-                when('/' + path, {
-                    templateUrl: 'views/list.client.view.html',
-                    controller: nameController
-                }).
-                when('/' + path + '/crear', {
-                    templateUrl: 'views/create.client.view.html',
-                    controller: nameController
-                }).
-                when('/' + path + '/:' + id, {
-                    templateUrl: 'views/view.client.view.html',
-                    controller: nameController
-                }).
-                when('/' + path + '/:' + id + '/edit', {
-                    templateUrl: 'views/edit.client.view.html',
-                    controller: nameController
-                });
-    }]);
+moduleCrudBase(params)/* routes */
+        .config(['$routeProvider', params.nameModule + 'METAProvider',
+            function($routeProvider, META) {
+                $routeProvider.
+                        when('/' + META.params.path, {
+                            templateUrl: 'views/list.client.view.html',
+                            controller: META.params.nameModule + 'Controller'
+                        }).
+                        when('/' + META.params.path + '/crear', {
+                            templateUrl: 'views/create.client.view.html',
+                            controller: META.params.nameModule + 'Controller'
+                        }).
+                        when('/' + META.params.path + '/:' + META.params.id, {
+                            templateUrl: 'views/view.client.view.html',
+                            controller: META.params.nameModule + 'Controller'
+                        }).
+                        when('/' + META.params.path + '/:' + META.params.id + '/edit', {
+                            templateUrl: 'views/edit.client.view.html',
+                            controller: META.params.nameModule + 'Controller'
+                        });
+            }]);
