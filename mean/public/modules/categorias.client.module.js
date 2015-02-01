@@ -23,7 +23,7 @@ moduleCrudBase(params)/* routes */
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/:' + META.params.id, {
-                            templateUrl: 'views/view.client.view.html',
+                            templateUrl: 'views/edit.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/:' + META.params.id + '/edit', {

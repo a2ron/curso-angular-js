@@ -36,7 +36,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
     {
         $scope.obj.$update(function(response)
         {
-            $location.path(Meta.path + '/' + $scope.obj._id);
+            $location.path(Meta.path);
 
         }, function(errorResponse) {
             $scope.error = 'Error al guardar';

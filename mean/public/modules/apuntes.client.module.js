@@ -30,7 +30,7 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
 
         obj.$save(function(response)
         {
-            $location.path(ApuntesMETA.path + '/' + response._id);
+            $location.path(apuntesMETA.path + '/' + response._id);
 
         }, function(errorResponse) {
             $scope.error = 'Error al guardar';
@@ -65,7 +65,7 @@ moduleCrudBase(params)
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/:' + META.params.id, {
-                            templateUrl: 'views/view.client.view.html',
+                            templateUrl: 'views/edit.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/:' + META.params.id + '/edit', {
