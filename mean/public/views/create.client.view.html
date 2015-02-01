@@ -2,21 +2,27 @@
     <h1>Crear {{params.nameSingular}}</h1>
     <form data-ng-submit="create()" novalidate>
         <div>
-            <label for="titulo">Titulo</label>
             <div>
                 <input type="text" data-ng-model="titulo" id="titulo" placeholder="Titulo" required>
             </div>
         </div>
 
         <div>
-            <label for="descripcion">Descripción</label>
             <div>
                 <input type="text" data-ng-model="descripcion" id="descripcion" placeholder="Descripción" required>
             </div>
         </div>
+
+        <div data-ng-show="'{{params.name}}' == 'Apuntes'" >
+            <label for="categoriaApunte">Categoría</label>
+            <select ng-options="cat._id as cat.titulo for cat in cats"  ng-model="categoriaApunte._id" id="categoriaApunte" data-ng-init="findCategorias()">
+            </select>
+        </div>
+
         <div>
             <input type="submit" value="Crear">
         </div>
+
 
         <!-- MENSAJE DE ERROR -->
         <div data-ng-show="error" >

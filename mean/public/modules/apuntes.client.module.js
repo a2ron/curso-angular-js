@@ -1,4 +1,4 @@
-moduleCrudBase({
+moduleCrudBase2({
     nameModule: 'apuntes',
     path: 'apuntes',
     id: 'apunteId',

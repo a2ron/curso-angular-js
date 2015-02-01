@@ -2,18 +2,23 @@
     <h1>Editar {{params.nameSingular}}</h1>
     <form data-ng-submit="update()" novalidate>
         <div>
-            <label for="titulo">Titulo</label>
             <div>
                 <input type="text" data-ng-model="obj.titulo" id="titulo" placeholder="Titulo" required>
             </div>
         </div>
 
         <div>
-            <label for="descripcion">Descripción</label>
             <div>
                 <input type="text" data-ng-model="obj.descripcion" id="descripcion" placeholder="Descripción" required>
             </div>
         </div>
+
+        <div data-ng-show="'{{params.name}}' == 'Apuntes'" >
+            <label for="categoriaApunte">Categoría</label>
+            <select ng-options="cat._id as cat.titulo for cat in cats"  ng-model="obj.idCategoriaApunte" id="categoriaApunte" data-ng-init="findCategorias()">
+            </select>
+        </div>
+
         <div>
             <input type="submit" value="Actualizar">
         </div>
