@@ -2,47 +2,68 @@
 <html> 
     <head>
         <title><%= title %></title>
-        <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
     </head>
     <body>
 
         <div class="container">
             <section ng-controller="IndexController">
-                <div data-ng-show="!user">
+
+                <% if (!user) { %>
+
+                <div>
                     <a href="/signup">Crear Cuenta</a>
                     <a href="/signin">Identificarse</a>
                 </div>
+
+                <% } else { %>
                 <div data-ng-show="user">
-                    <a class="pull-right" href="/signout">Cerrar Sesión</a>
-                    <h1>Hola <span>{{user.nombre}} {{user.apellidos}}</span></h1>
-                    <ul>
-                        <li><a href="/#!/apuntes">Apuntes</a></li>
-                        <li><a href="/#!/categorias">Categorias</a></li>
-                    </ul>
+                    
+                    <nav class="navbar navbar-default">
+                            <div class="container">
+                                <ul class="nav navbar-nav">
+                                    <li ng-repeat="item in menu">
+                                        <p class="navbar-btn">
+                                            <a ng-class="{ active: menuItemActive('{{item.path}}')}" class="btn btn-default"  href="/#!/{{item.path}}" >{{item.title}}</a>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    
+                    <div>
+                        <a class="pull-right" href="/signout">Cerrar Sesión</a>
+                        <h3>Hola <span>{{user.nombre}} {{user.apellidos}}</span></h3>                       
+                    </div>
+
+                    <!-- CONTENIDO BY ANGULAR JS -->
+                    <section ng-view></section>
+
+                    <!-- SCRIPTS -->
+                    <script type="text/javascript">
+                        window.user = <%- user || 'null' %> ;</script> 
+                    <!-- 
+                        window.user = <%- user || 'null' %> ;</script> 
+                    -->
+
+                    <!-- LIBRARYS -->
+                    <script src="/lib/angular/angular.js" type="text/javascript"></script>
+                    <script src="/lib/angular-route/angular-route.js" type="text/javascript"></script>
+                    <script src="/lib/angular-resource/angular-resource.js" type="text/javascript"></script>
+
+                    <!-- My ANGULAR MODULES -->
+                    <script src="/lib/myLib.js" type="text/javascript"></script>
+                    <script src="/application.js" type="text/javascript"></script>
+
+
+                    <script src="/modules/index.client.module.js" type="text/javascript"></script>
+                    <script src="/modules/categorias.client.module.js" type="text/javascript"></script>
+                    <script src="/modules/apuntes.client.module.js" type="text/javascript"></script>
                 </div>
+                <% } %>
+
             </section> 
-
-            <section ng-view></section>
-
         </div>
-
-        <!-- SCRIPTS -->
-
-        <script type="text/javascript">
-            window.user = <%- user || 'null' %> ;</script>
-
-        <!-- LIBRARYS -->
-        <script src="/lib/angular/angular.js" type="text/javascript"></script>
-        <script src="/lib/angular-route/angular-route.js" type="text/javascript"></script>
-        <script src="/lib/angular-resource/angular-resource.js" type="text/javascript"></script>
-
-        <!-- My ANGULAR MODULES -->
-        <script src="/lib/myLib.js" type="text/javascript"></script>
-        <script src="/application.js" type="text/javascript"></script>
-
-
-        <script src="/modules/index.client.module.js" type="text/javascript"></script>
-        <script src="/modules/categorias.client.module.js" type="text/javascript"></script>
-        <script src="/modules/apuntes.client.module.js" type="text/javascript"></script>
     </body>
 </html>
