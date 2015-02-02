@@ -62,7 +62,6 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
             $scope.obj.$remove(function()
             {
                 $location.path(Meta.path);
-
             });
         }
     };
