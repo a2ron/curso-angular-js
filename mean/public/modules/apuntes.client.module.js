@@ -42,7 +42,7 @@ var params = {
     nameModule: 'apuntes',
     path: 'apuntes',
     id: 'apunteId',
-    pathAPI: 'api/apuntes/:apunteId',
+    pathAPI: 'api/apuntes/:apunteId/:categoriaApunteId',
     viewParams: {
         name: 'Apuntes',
         nameSingular: 'Apunte',

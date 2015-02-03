@@ -77,6 +77,10 @@ function moduleCrudBase(p)
                     return $resource(p.pathAPI, params, {
                         update: {
                             method: 'PUT'
+                        },
+                        search: {
+                            method: 'GET',
+                            isArray:true
                         }
                     });
                 }])

@@ -1,3 +1,20 @@
+var a;
+function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, $filter, apuntesFactory, categoriasApuntesMETA)
+{
+    controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
+
+    $scope.findApuntes = function()
+    {
+        setTimeout(function()
+        {
+            $scope.apuntes = apuntesFactory.search({
+                apunteId: $scope.obj._id,
+                categoriaApunteId: $scope.obj._id
+            });
+
+        }, 500);
+    };
+}
 var params = {
     nameModule: 'categoriasApuntes',
     path: 'categorias',
@@ -7,7 +24,8 @@ var params = {
         name: 'Categorías',
         nameSingular: 'Categoría',
         path: 'categorias'//redundante pero necesario
-    }
+    },
+    injection: categoriasController
 };
 
 moduleCrudBase(params)/* routes */
@@ -30,4 +48,5 @@ moduleCrudBase(params)/* routes */
                             templateUrl: 'views/edit.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         });
-            }]);
+            }
+        ]);

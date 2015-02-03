@@ -5,10 +5,10 @@ var controller = require('../../app/controllers/categoriaApunte.server.controlle
 var cu = require('../../app/controllers/usuarios.server.controller');
 var crudBase = require('../../app/routes/crudBase.server.routes.js');
 
-var paramId = 'categoriaApunteId';
+var paramsIds = ['categoriaApunteId'];
 var path = '/api/categorias';
 
 module.exports = function(app)
 {
-    crudBase(cu, controller, app, path, paramId);
+    crudBase(cu, controller, app, path, paramsIds);
 };

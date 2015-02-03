@@ -1,4 +1,4 @@
-<section data-ng-init="findOne()">
+<section data-ng-init="findOne();">
     <h1>Editar {{params.nameSingular}}</h1>
     <form data-ng-submit="update()" novalidate>
         <div>
@@ -28,9 +28,17 @@
             <strong data-ng-bind="error"></strong>
         </div>
 
+
         <div>
             <a href="/#!/{{params.path}}/">Lista</a>
             <a href="/#!/" data-ng-click="delete();">Borrar</a>
+        </div>
+
+        <div data-ng-show="'{{params.name}}' == 'Categorías'" >
+            <hr/>
+            <ul data-ng-init="findApuntes()">
+                <li ng-repeat="apunte in apuntes">{{apunte.titulo}}</li>
+            </ul>
         </div>
 
     </form>
