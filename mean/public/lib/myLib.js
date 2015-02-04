@@ -79,8 +79,9 @@ function moduleCrudBase(p)
                             method: 'PUT'
                         },
                         search: {
+                            url: 'api/apuntes/cat/:idCategoriaApunte',
                             method: 'GET',
-                            isArray:true
+                            isArray: true
                         }
                     });
                 }])

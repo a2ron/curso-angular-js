@@ -5,14 +5,20 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 
     $scope.findApuntes = function()
     {
-        setTimeout(function()
-        {
-            $scope.apuntes = apuntesFactory.search({
-                apunteId: $scope.obj._id,
-                categoriaApunteId: $scope.obj._id
-            });
 
-        }, 500);
+        function loadEnd()
+        {
+            console.log("try");
+            if (!$scope.obj._id) {
+                setTimeout(loadEnd, 10);
+            }
+            else {
+                $scope.apuntes = apuntesFactory.search({
+                    idCategoriaApunte: $scope.obj._id
+                });
+            }
+        }
+        loadEnd();
     };
 }
 var params = {

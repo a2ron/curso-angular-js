@@ -33,36 +33,13 @@ exports.controllerBase = function(exports, params)
 
     };
 
-    exports.list2 = function(req, res, next)
-    {
-        res.json(req['objs']);
-    };
+
 
     exports.read = function(req, res)
     {
         res.json(req[params.reqModel]);
     };
 
-    /**
-     * Metodo para obtener
-     * @param {type} req
-     * @param {type} res
-     * @param {type} next
-     * @param {type} id
-     * @returns {undefined}
-     */
-    exports.getByIdCategoriaApunte = function(req, res, next, id)
-    {
-        params.Model.find({idCategoriaApunte: id}, function(err, obj)
-        {
-            if (err)
-                return next(err);
-            else {
-                req['objs'] = obj;
-                next();
-            }
-        });
-    };
 
     /**
      * Metodo para obtener
