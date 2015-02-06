@@ -2,26 +2,11 @@
     <h1>Editar {{params.nameSingular}}</h1>
 
 
-<!--     probar form 
-    <form>
-        <formly-form model="obj" fields="formFields" options="formOptions">
+    <!--probar form--> 
+    <form ng-submit="update()">
+        <formly-form model="obj" fields="editFields">
         </formly-form>
-    </form>-->
 
-
-
-    <form data-ng-submit="update()" novalidate>
-        <div>
-            <div>
-                <input type="text" data-ng-model="obj.titulo" id="titulo" placeholder="Titulo" required>
-            </div>
-        </div>
-
-        <div>
-            <div>
-                <input type="text" data-ng-model="obj.descripcion" id="descripcion" placeholder="Descripción" required>
-            </div>
-        </div>
 
         <div data-ng-show="'{{params.name}}' == 'Apuntes'" >
             <label for="categoriaApunte">Categoría</label>
@@ -29,8 +14,13 @@
             </select>
         </div>
 
+        <br/>
+        
         <div>
-            <input type="submit" value="Actualizar">
+            <a class="btn btn-default" href="/#!/{{params.path}}/">Lista</a>
+            <a class="btn btn-default" href="/#!/" data-ng-click="delete();">Borrar</a>
+
+            <input class="btn btn-default" type="submit" value="Actualizar">
         </div>
 
         <!-- MENSAJE DE ERROR -->
@@ -38,18 +28,13 @@
             <strong data-ng-bind="error"></strong>
         </div>
 
-
-        <div>
-            <a href="/#!/{{params.path}}/">Lista</a>
-            <a href="/#!/" data-ng-click="delete();">Borrar</a>
-        </div>
-
-        <div data-ng-show="'{{params.name}}' == 'Categorías'" >
-            <hr/>
-            <ul data-ng-init="findApuntes()">
-                <li ng-repeat="apunte in apuntes">{{apunte.titulo}}</li>
-            </ul>
-        </div>
-
     </form>
+
+    <div data-ng-show="'{{params.name}}' == 'Categorías'" >
+        <hr/>
+        <ul data-ng-init="findApuntes()">
+            <li ng-repeat="apunte in apuntes">{{apunte.titulo}}</li>
+        </ul>
+    </div>
+
 </section>

@@ -36,6 +36,26 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
             $scope.error = 'Error al guardar';
         });
     };
+
+    //form prueba
+    $scope.editFields = [
+        {
+            key: 'titulo',
+            type: 'input',
+            templateOptions: {
+                placeholder: 'Título',
+                label: 'Título'
+            }
+        },
+        {
+            key: 'descripcion',
+            type: 'input',
+            templateOptions: {
+                placeholder: 'Descripción',
+                label: 'Descripción'
+            }
+        }
+    ];
 }
 
 var params = {

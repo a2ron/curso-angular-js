@@ -20,9 +20,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     };
 
     //form prueba
-    $scope.formData = {
-    };
-    $scope.formFields = [
+    $scope.editFields = [
         {
             key: 'titulo',
             type: 'input',
@@ -40,13 +38,6 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             }
         }
     ];
-
-    $scope.formOptions = {
-        //Set the id of the form
-        uniqueFormId: 'editForm'
-    };
-
-
 }
 var params = {
     nameModule: 'categoriasApuntes',

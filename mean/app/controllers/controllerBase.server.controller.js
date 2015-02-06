@@ -3,6 +3,28 @@
 exports.controllerBase = function(exports, params)
 {
 
+
+    /**
+     * For check fields before update, create...
+     * @param {type} arrayParams
+     * @param {type} jsonOriginal
+     * @returns {unresolved}
+     */
+    function checkFieldsAndGetJson(arrayParams, jsonOriginal) {
+        var json = {};
+        if (!arrayParams)
+            arrayParams = Object.keys(params.Model.schema.paths);
+        for (var i in arrayParams)
+        {
+            var field = arrayParams[i];
+            if (jsonOriginal[field] !== undefined)
+                json[field] = jsonOriginal[field];
+        }
+
+        return json;
+    }
+
+
     exports.create = function(req, res, next)
     {
         //crear la nueva instancia
@@ -71,16 +93,18 @@ exports.controllerBase = function(exports, params)
      */
     exports.update = function(req, res, next)
     {
-        params.Model.findByIdAndUpdate(req[params.reqModel].id, req.body, function(err, obj)
+        //check fields
+        var update = checkFieldsAndGetJson(params.possibleParamsUpdate, req.body);
+        //save
+        params.Model.findByIdAndUpdate(req[params.reqModel].id, update, function(err, obj)
         {
-            console.log(obj);
             if (err)
                 return next(err);
             else {
                 res.json(obj);
             }
         });
-        
+
     };
 
     exports.delete = function(req, res, next)
