@@ -1,4 +1,3 @@
-var a;
 function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, $filter, apuntesFactory, categoriasApuntesMETA)
 {
     controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
@@ -8,7 +7,6 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 
         function loadEnd()
         {
-            console.log("try");
             if (!$scope.obj._id) {
                 setTimeout(loadEnd, 10);
             }
@@ -20,6 +18,35 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         }
         loadEnd();
     };
+
+    //form prueba
+    $scope.formData = {
+    };
+    $scope.formFields = [
+        {
+            key: 'titulo',
+            type: 'input',
+            templateOptions: {
+                placeholder: 'Título',
+                label: 'Título'
+            }
+        },
+        {
+            key: 'descripcion',
+            type: 'input',
+            templateOptions: {
+                placeholder: 'Descripción',
+                label: 'Descripción'
+            }
+        }
+    ];
+
+    $scope.formOptions = {
+        //Set the id of the form
+        uniqueFormId: 'editForm'
+    };
+
+
 }
 var params = {
     nameModule: 'categoriasApuntes',

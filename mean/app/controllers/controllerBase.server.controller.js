@@ -73,12 +73,14 @@ exports.controllerBase = function(exports, params)
     {
         params.Model.findByIdAndUpdate(req[params.reqModel].id, req.body, function(err, obj)
         {
+            console.log(obj);
             if (err)
                 return next(err);
             else {
                 res.json(obj);
             }
         });
+        
     };
 
     exports.delete = function(req, res, next)
