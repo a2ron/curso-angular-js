@@ -1,14 +1,10 @@
-function apuntesController($scope, $routeParams, $location, categoriasApuntesFactory, $filter, apuntesFactory, apuntesMETA, $http)
+function apuntesController($scope, $routeParams, $location, categoriasApuntesFactory, apuntesFactory, apuntesMETA, filterFilter)
 {
     controllerBase($scope, $routeParams, $location, apuntesFactory, apuntesMETA);
 
     var cats = [];
-    $scope.findOne = function()
+    function loadCategorias()
     {
-        var p = {};
-        p[apuntesMETA.id] = $routeParams[apuntesMETA.id];
-        $scope.obj = apuntesFactory.get(p);
-
         $scope.cats = categoriasApuntesFactory.query();
 
         function loadEnd()
@@ -32,32 +28,39 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                         });
                     }
                 }
-                console.log(cats);
                 $scope.$apply();//for update interface
             }
         }
         loadEnd();
+    }
 
-    };
-
-    $scope.create = function()
+    $scope.findOne = function()
     {
-        var obj = new apuntesFactory({
-            titulo: this.titulo,
-            descripcion: this.descripcion,
-            idCategoriaApunte: $scope.categoriaApunte._id
-        });
-
-        obj.$save(function(response)
-        {
-            $location.path(apuntesMETA.path + '/' + response._id);
-
-        }, function(errorResponse) {
-            $scope.error = 'Error al guardar';
-        });
+        var p = {};
+        p[apuntesMETA.id] = $routeParams[apuntesMETA.id];
+        $scope.obj = apuntesFactory.get(p);
     };
 
-    //form prueba
+    if ($routeParams[apuntesMETA.id])
+        $scope.view = 'Editar';
+    else
+        $scope.view = 'Nuevo';
+    $scope.initView = function()
+    {
+        if ($scope.view === 'Editar') {
+            $scope.findOne();
+            $scope.action = $scope.update;
+        }
+        else {
+            $scope.action = $scope.create;
+            $scope.obj = new apuntesFactory({
+                idCategoriaApunte: 0
+            });
+        }
+        loadCategorias();
+    };
+
+    //SCHEMA FOR FORM
     $scope.editFields = [
         {
             key: 'titulo',
@@ -82,7 +85,8 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
             validators: {
                 selectOne: function(viewValue, modelValue) {
                     var value = modelValue || viewValue;
-                    return value !== 0;
+                    var selected = filterFilter(cats, {value: value});
+                    return value !== 0 && selected.length === 1;
                 }
             },
             templateOptions: {
@@ -117,12 +121,12 @@ moduleCrudBase(params)
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/crear', {
-                            templateUrl: 'views/create.client.view.html',
+                            templateUrl: 'views/edit.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/:' + META.params.id, {
                             templateUrl: 'views/edit.client.view.html',
-                            controller: META.params.nameModule + 'Controller'
+                            controller: META.params.nameModule + 'Controller',
                         }).
                         when('/' + META.params.path + '/:' + META.params.id + '/edit', {
                             templateUrl: 'views/edit.client.view.html',

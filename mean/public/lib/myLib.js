@@ -5,14 +5,9 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
 
     $scope.create = function()
     {
-        var obj = new Factory({
-            titulo: this.titulo,
-            descripcion: this.descripcion
-        });
-
-        obj.$save(function(response)
+        $scope.obj.$save(function(response)
         {
-            $location.path(Meta.path + '/' + response._id);
+            $location.path(Meta.path);
 
         }, function(errorResponse) {
             $scope.error = 'Error al guardar';

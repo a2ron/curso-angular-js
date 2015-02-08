@@ -1,10 +1,10 @@
-<section data-ng-init="findOne();">
-    <h1>Editar {{params.nameSingular}}</h1>
+<section data-ng-init="initView();">
+    <h1>{{view}} {{params.nameSingular}}</h1>
 
 
     <!--probar form--> 
-    <form name="editForm" ng-submit="editForm.$valid && update()">
-        <formly-form model="obj" fields="editFields">
+    <form name="editForm" ng-submit="editForm.$valid && action();">
+        <formly-form  model="obj" fields="editFields">
         </formly-form>
 
         <br/>
@@ -13,7 +13,7 @@
             <a class="btn btn-default" href="/#!/{{params.path}}/">Lista</a>
             <a class="btn btn-danger" href="/#!/" data-ng-click="delete();">Borrar</a>
 
-            <input class="btn btn-default" type="submit" value="Actualizar">
+            <input class="btn btn-default" type="submit" value="Guardar">
         </div>
 
         <!-- MENSAJE DE ERROR -->
@@ -30,6 +30,6 @@
         </ul>
     </div>
 
-    <!--<pre>{{obj|json}}</pre>-->
+    <pre>{{obj|json}}</pre>
 
 </section>

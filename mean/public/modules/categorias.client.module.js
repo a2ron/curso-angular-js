@@ -19,7 +19,23 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         loadEnd();
     };
 
-    //form prueba
+    if ($routeParams[categoriasApuntesMETA.id])
+        $scope.view = 'Editar';
+    else
+        $scope.view = 'Nueva';
+    $scope.initView = function()
+    {
+        if ($scope.view === 'Editar') {
+            $scope.findOne();
+            $scope.action = $scope.update;
+        }
+        else {
+            $scope.action = $scope.create;
+            $scope.obj = new categoriasApuntesFactory({});
+        }
+    };
+
+    //SCHEMA FOR FORM
     $scope.editFields = [
         {
             key: 'titulo',
@@ -62,7 +78,7 @@ moduleCrudBase(params)/* routes */
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/crear', {
-                            templateUrl: 'views/create.client.view.html',
+                            templateUrl: 'views/edit.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/:' + META.params.id, {

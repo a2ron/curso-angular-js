@@ -3,14 +3,7 @@
 exports.controllerBase = function(exports, params)
 {
 
-
-    /**
-     * For check fields before update, create...
-     * @param {type} arrayParams
-     * @param {type} jsonOriginal
-     * @returns {unresolved}
-     */
-    function checkFieldsAndGetJson(arrayParams, jsonOriginal) {
+    function checkFieldsAndGetObject(arrayParams, jsonOriginal, objOriginal) {
         var json = {};
         if (!arrayParams)
             arrayParams = Object.keys(params.Model.schema.paths);
@@ -20,16 +13,27 @@ exports.controllerBase = function(exports, params)
             if (jsonOriginal[field] !== undefined)
                 json[field] = jsonOriginal[field];
         }
+        //create or modify obj
+        var obj;
+        if (objOriginal) {
+            obj = objOriginal;
+            for (var key in json)
+            {
+                var field = json[key];
+                obj[key] = field;
+            }
+        }
+        else
+            obj = new params.Model(json);
 
-        return json;
+        return obj;
     }
 
 
     exports.create = function(req, res, next)
     {
         //crear la nueva instancia
-        var obj = new params.Model(req.body);
-
+        var obj = checkFieldsAndGetObject(params.acceptedData, req.body);
         obj.creator = req.user;
 
         //guardarla en BD
@@ -94,15 +98,15 @@ exports.controllerBase = function(exports, params)
     exports.update = function(req, res, next)
     {
         //check fields
-        var update = checkFieldsAndGetJson(params.acceptedData, req.body);
-        //save
-        params.Model.findByIdAndUpdate(req[params.reqModel].id, update, function(err, obj)
+        var obj = checkFieldsAndGetObject(params.acceptedData, req.body, req[params.reqModel]);
+        //guardarla en BD
+        obj.save(function(err)
         {
-            if (err)
+            if (err) //llamar al siguiente middleware con un mensaje de error
                 return next(err);
-            else {
+
+            else //enviar respuesta en JSON
                 res.json(obj);
-            }
         });
 
     };
