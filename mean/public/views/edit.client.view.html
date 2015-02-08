@@ -7,18 +7,11 @@
         <formly-form model="obj" fields="editFields">
         </formly-form>
 
-
-        <div data-ng-show="'{{params.name}}' == 'Apuntes'" >
-            <label for="categoriaApunte">Categoría</label>
-            <select ng-options="cat._id as cat.titulo for cat in cats"  ng-model="obj.idCategoriaApunte" id="categoriaApunte" data-ng-init="findCategorias()">
-            </select>
-        </div>
-
         <br/>
-        
+
         <div>
             <a class="btn btn-default" href="/#!/{{params.path}}/">Lista</a>
-            <a class="btn btn-default" href="/#!/" data-ng-click="delete();">Borrar</a>
+            <a class="btn btn-danger" href="/#!/" data-ng-click="delete();">Borrar</a>
 
             <input class="btn btn-default" type="submit" value="Actualizar">
         </div>
@@ -36,5 +29,7 @@
             <li ng-repeat="apunte in apuntes">{{apunte.titulo}}</li>
         </ul>
     </div>
+
+    <!--<pre>{{obj|json}}</pre>-->
 
 </section>

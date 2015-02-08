@@ -1,9 +1,14 @@
-function apuntesController($scope, $routeParams, $location, categoriasApuntesFactory, $filter, apuntesFactory, apuntesMETA)
+function apuntesController($scope, $routeParams, $location, categoriasApuntesFactory, $filter, apuntesFactory, apuntesMETA, $http)
 {
     controllerBase($scope, $routeParams, $location, apuntesFactory, apuntesMETA);
 
-    $scope.findCategorias = function()
+    var cats = [];
+    $scope.findOne = function()
     {
+        var p = {};
+        p[apuntesMETA.id] = $routeParams[apuntesMETA.id];
+        $scope.obj = apuntesFactory.get(p);
+
         $scope.cats = categoriasApuntesFactory.query();
 
         function loadEnd()
@@ -13,6 +18,17 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
             }
             else {
                 $scope.categoriaApunte = $scope.cats[0];
+                for (var i in $scope.cats)
+                {
+                    var cat = $scope.cats[i];
+                    if (cat.titulo) {
+                        cats.push({
+                            name: cat.titulo,
+                            value: cat._id
+                        });
+                    }
+                }
+                console.log(cats);
                 $scope.$apply();//for update interface
             }
         }
@@ -53,6 +69,14 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
             templateOptions: {
                 placeholder: 'Descripción',
                 label: 'Descripción'
+            }
+        },
+        {
+            key: 'idCategoriaApunte',
+            type: 'select',
+            templateOptions: {
+                label: 'Categoría',
+                options: cats
             }
         }
     ];
