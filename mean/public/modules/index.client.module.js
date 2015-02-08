@@ -10,8 +10,6 @@ angular.module('index', []).controller('IndexController', ['$scope', '$location'
                 "path": "categorias"
             }];
 
-        $scope.user = window.user;
-
         $scope.menuItemActive = function(_path)
         {
             var path = $location.$$path.split('/');
