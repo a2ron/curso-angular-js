@@ -94,7 +94,7 @@ exports.controllerBase = function(exports, params)
     exports.update = function(req, res, next)
     {
         //check fields
-        var update = checkFieldsAndGetJson(params.possibleParamsUpdate, req.body);
+        var update = checkFieldsAndGetJson(params.acceptedData, req.body);
         //save
         params.Model.findByIdAndUpdate(req[params.reqModel].id, update, function(err, obj)
         {

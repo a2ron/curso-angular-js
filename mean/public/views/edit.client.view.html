@@ -3,7 +3,7 @@
 
 
     <!--probar form--> 
-    <form ng-submit="update()">
+    <form name="editForm" ng-submit="editForm.$valid && update()">
         <formly-form model="obj" fields="editFields">
         </formly-form>
 

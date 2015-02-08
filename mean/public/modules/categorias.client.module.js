@@ -26,12 +26,13 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             type: 'input',
             templateOptions: {
                 placeholder: 'Título',
-                label: 'Título'
+                label: 'Título',
+                required: true
             }
         },
         {
             key: 'descripcion',
-            type: 'input',
+            type: 'textarea',
             templateOptions: {
                 placeholder: 'Descripción',
                 label: 'Descripción'

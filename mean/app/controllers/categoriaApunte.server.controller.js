@@ -6,5 +6,5 @@ cbase.controllerBase(exports,
         {
             Model: require('mongoose').model('CategoriaApunte'),
             reqModel: 'categoriaApunte',
-            possibleParamsUpdate: ['titulo', 'descripcion']
+            acceptedData: ['titulo', 'descripcion']
         });

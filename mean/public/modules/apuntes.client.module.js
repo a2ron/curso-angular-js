@@ -18,6 +18,10 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
             }
             else {
                 $scope.categoriaApunte = $scope.cats[0];
+                cats.push({
+                    name: 'Seleccione una',
+                    value: 0
+                });
                 for (var i in $scope.cats)
                 {
                     var cat = $scope.cats[i];
@@ -60,12 +64,13 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
             type: 'input',
             templateOptions: {
                 placeholder: 'Título',
-                label: 'Título'
+                label: 'Título',
+                required: true
             }
         },
         {
             key: 'descripcion',
-            type: 'input',
+            type: 'textarea',
             templateOptions: {
                 placeholder: 'Descripción',
                 label: 'Descripción'
@@ -74,9 +79,16 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
         {
             key: 'idCategoriaApunte',
             type: 'select',
+            validators: {
+                selectOne: function(viewValue, modelValue) {
+                    var value = modelValue || viewValue;
+                    return value !== 0;
+                }
+            },
             templateOptions: {
                 label: 'Categoría',
-                options: cats
+                options: cats,
+                required: true
             }
         }
     ];
