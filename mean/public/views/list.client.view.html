@@ -1,12 +1,31 @@
 <section data-ng-init="find()">
-    <a href="#!/{{params.path}}/crear">Crear</a>
 
-    <ul>
-        <li data-ng-repeat="obj in objs">
-            <a data-ng-href="#!/{{params.path}}/{{obj._id}}" data-ng-bind="obj.titulo" ></a>
-            <br/>
-        </li>
-    </ul>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <!--        <div class="panel-heading">Panel heading</div>
+                <div class="panel-body">
+                </div>-->
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th ng-repeat="field in params.listFields">{{field.title}} </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="obj in objs">
+                    <th>{{$index}}</th>
+                    <td ng-repeat="field in params.listFields">
+                        <a data-ng-href="#!/{{params.path}}/{{obj._id}}">{{obj[field.key]}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a class="btn btn-default" href="#!/{{params.path}}/crear">Añadir</a>
+
     <div data-ng-hide="!objs || objs.length">
         Aún no hay {{params.name}}
     </div>

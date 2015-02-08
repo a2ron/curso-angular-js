@@ -34,13 +34,6 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
         loadEnd();
     }
 
-    $scope.findOne = function()
-    {
-        var p = {};
-        p[apuntesMETA.id] = $routeParams[apuntesMETA.id];
-        $scope.obj = apuntesFactory.get(p);
-    };
-
     if ($routeParams[apuntesMETA.id])
         $scope.view = 'Editar';
     else
@@ -106,6 +99,20 @@ var params = {
     viewParams: {
         name: 'Apuntes',
         nameSingular: 'Apunte',
+        listFields: [
+            {
+                title: 'Título',
+                key: 'titulo'
+            },
+            {
+                title: 'Descripción',
+                key: 'descripcion'
+            },
+            {
+                title: 'Categoría',
+                key: 'idCategoriaApunte'
+            }
+        ],
         path: 'apuntes'//redundante pero necesario
     },
     injection: apuntesController

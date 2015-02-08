@@ -64,6 +64,16 @@ var params = {
     viewParams: {
         name: 'Categorías',
         nameSingular: 'Categoría',
+        listFields: [
+            {
+                title: 'Título',
+                key: 'titulo'
+            },
+            {
+                title: 'Descripción',
+                key: 'descripcion'
+            }
+        ],
         path: 'categorias'//redundante pero necesario
     },
     injection: categoriasController
