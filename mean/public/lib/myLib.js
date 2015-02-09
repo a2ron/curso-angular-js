@@ -65,7 +65,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
 function moduleCrudBase(p)
 {
     var injection = (p.injection) ? p.injection : ['$scope', '$routeParams', '$location', p.nameModule + "Factory", p.nameModule + 'META', controllerBase];
-    return angular.module(p.nameModule, [])
+    return angular.module(p.nameModule, ['schemaForm'])
             .factory(p.nameModule + "Factory", ['$resource', function($resource) {
                     var params = {};
                     params[p.id] = '@_id';

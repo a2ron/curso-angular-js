@@ -2,37 +2,75 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
 {
     controllerBase($scope, $routeParams, $location, apuntesFactory, apuntesMETA);
 
-    var cats = [];
     function loadCategorias()
     {
-        $scope.cats = categoriasApuntesFactory.query();
+        var cats = categoriasApuntesFactory.query();
 
         function loadEnd()
         {
-            if ($scope.cats.length <= 0) {
+            if (cats.length <= 0) {
                 setTimeout(loadEnd, 200);
             }
             else {
-                $scope.categoriaApunte = $scope.cats[0];
-                cats.push({
+                var categories = [];
+                $scope.categoriaApunte = cats[0];
+                categories.push({
                     name: 'Seleccione una',
                     value: 0
                 });
-                for (var i in $scope.cats)
+                for (var i in cats)
                 {
-                    var cat = $scope.cats[i];
+                    var cat = cats[i];
                     if (cat.titulo) {
-                        cats.push({
+                        categories.push({
                             name: cat.titulo,
                             value: cat._id
                         });
                     }
                 }
+                $scope.schema = {
+                    type: "object",
+                    properties: {
+                        titulo: {type: "string", minLength: 2, title: "Título"},
+                        descripcion: {
+                            type: "string",
+                            title: "Descripción"
+                        },
+                        idCategoriaApunte: {
+                            title: "Categoría",
+                            type: 'string'
+                        }
+                    }
+                };
+                $scope.form = [
+                    'titulo',
+                    'descripcion',
+                    {
+                        key: "idCategoriaApunte",
+                        type: 'select',
+                        titleMap: categories
+                    }
+                ];
+
                 $scope.$apply();//for update interface
             }
         }
         loadEnd();
     }
+
+
+
+    $scope.onSubmit = function(form) {
+        // First we broadcast an event so all fields validate themselves
+        $scope.$broadcast('schemaFormValidate');
+
+        // Then we check if the form is valid
+        if (form.$valid) {
+            $scope.action();
+        }
+        else
+            alert('Algún campo no es correcto...');
+    };
 
     if ($routeParams[apuntesMETA.id])
         $scope.view = 'Editar';
@@ -78,17 +116,18 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
             validators: {
                 selectOne: function(viewValue, modelValue) {
                     var value = modelValue || viewValue;
-                    var selected = filterFilter(cats, {value: value});
+                    var selected = filterFilter(categories, {value: value});
                     return value !== 0 && selected.length === 1;
                 }
             },
             templateOptions: {
                 label: 'Categoría',
-                options: cats,
                 required: true
             }
         }
     ];
+
+
 }
 
 var params = {
