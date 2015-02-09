@@ -2,25 +2,56 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
 {
     controllerBase($scope, $routeParams, $location, apuntesFactory, apuntesMETA);
 
+    function defSchema(categories)
+    {
+        //definir el schema del form ahora que tengo las categorias
+        $scope.schema = {
+            type: "object",
+            properties: {
+                titulo: {type: "string", minLength: 2, title: "Título", required: true},
+                descripcion: {
+                    type: "string",
+                    title: "Descripción"
+                },
+                idCategoriaApunte: {
+                    title: "Categoría",
+                    type: 'string'
+                }
+            }
+        };
+        $scope.form = [
+            'titulo',
+            'descripcion',
+            {
+                key: "idCategoriaApunte",
+                type: 'select',
+                titleMap: categories
+            },
+            $scope.actionButtons 
+        ];
+
+        $scope.$apply();//for update interface
+    }
+
     function loadCategorias()
     {
-        var cats = categoriasApuntesFactory.query();
+        var resCatQuery = categoriasApuntesFactory.query();
 
         function loadEnd()
         {
-            if (cats.length <= 0) {
+            if (resCatQuery.length <= 0) {
                 setTimeout(loadEnd, 200);
             }
             else {
                 var categories = [];
-                $scope.categoriaApunte = cats[0];
+                $scope.categoriaApunte = resCatQuery[0];
                 categories.push({
                     name: 'Seleccione una',
                     value: 0
                 });
-                for (var i in cats)
+                for (var i in resCatQuery)
                 {
-                    var cat = cats[i];
+                    var cat = resCatQuery[i];
                     if (cat.titulo) {
                         categories.push({
                             name: cat.titulo,
@@ -28,57 +59,15 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                         });
                     }
                 }
-                $scope.schema = {
-                    type: "object",
-                    properties: {
-                        titulo: {type: "string", minLength: 2, title: "Título"},
-                        descripcion: {
-                            type: "string",
-                            title: "Descripción"
-                        },
-                        idCategoriaApunte: {
-                            title: "Categoría",
-                            type: 'string'
-                        }
-                    }
-                };
-                $scope.form = [
-                    'titulo',
-                    'descripcion',
-                    {
-                        key: "idCategoriaApunte",
-                        type: 'select',
-                        titleMap: categories
-                    }
-                ];
-
-                $scope.$apply();//for update interface
+                defSchema(categories);
             }
         }
         loadEnd();
     }
 
-
-
-    $scope.onSubmit = function(form) {
-        // First we broadcast an event so all fields validate themselves
-        $scope.$broadcast('schemaFormValidate');
-
-        // Then we check if the form is valid
-        if (form.$valid) {
-            $scope.action();
-        }
-        else
-            alert('Algún campo no es correcto...');
-    };
-
-    if ($routeParams[apuntesMETA.id])
-        $scope.view = 'Editar';
-    else
-        $scope.view = 'Nuevo';
-    $scope.initView = function()
+    $scope.initViewEditOrCreate = function()
     {
-        if ($scope.view === 'Editar') {
+        if ($scope.viewEditOrCreate === 'Editar') {
             $scope.findOne();
             $scope.action = $scope.update;
         }
@@ -90,44 +79,6 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
         }
         loadCategorias();
     };
-
-    //SCHEMA FOR FORM
-    $scope.editFields = [
-        {
-            key: 'titulo',
-            type: 'input',
-            templateOptions: {
-                placeholder: 'Título',
-                label: 'Título',
-                required: true
-            }
-        },
-        {
-            key: 'descripcion',
-            type: 'textarea',
-            templateOptions: {
-                placeholder: 'Descripción',
-                label: 'Descripción'
-            }
-        },
-        {
-            key: 'idCategoriaApunte',
-            type: 'select',
-            validators: {
-                selectOne: function(viewValue, modelValue) {
-                    var value = modelValue || viewValue;
-                    var selected = filterFilter(categories, {value: value});
-                    return value !== 0 && selected.length === 1;
-                }
-            },
-            templateOptions: {
-                label: 'Categoría',
-                required: true
-            }
-        }
-    ];
-
-
 }
 
 var params = {

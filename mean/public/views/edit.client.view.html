@@ -1,18 +1,10 @@
-<section data-ng-init="initView();">
-    <h1>{{view}} {{params.nameSingular}}</h1>
+<section data-ng-init="initViewEditOrCreate();">
+    <h1>{{viewEditOrCreate}} {{nameSingular}}</h1>
 
-
-    <form name="myForm" sf-schema="schema" sf-form="form" sf-model="obj">
+    <form name="myForm" 
+          sf-schema="schema" sf-form="form" sf-model="obj" 
+          ng-submit="onSubmit(myForm)">
     </form>
-
-    <br/>
-
-    <div>
-        <a class="btn btn-default" href="/#!/{{params.path}}/">Lista</a>
-        <a class="btn btn-danger" href="/#!/" ng-click="delete();">Borrar</a>
-
-        <input class="btn btn-primary" type="button" value="Guardar" ng-click="onSubmit(myForm)">
-    </div>
 
     <!-- MENSAJE DE ERROR -->
     <div data-ng-show="error" >
@@ -20,7 +12,7 @@
     </div>
 
 
-    <div ng-show="'{{params.name}}' == 'Categorías'" >
+    <div ng-show="'{{name}}' == 'Categorías'" >
         <hr/>
         <ul data-ng-init="findApuntes()">
             <li ng-repeat="apunte in apuntes">{{apunte.titulo}}</li>

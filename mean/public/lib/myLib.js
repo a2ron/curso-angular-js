@@ -1,8 +1,15 @@
 
 function controllerBase($scope, $routeParams, $location, Factory, Meta)
 {
-    $scope.params = Meta.viewParams;
+    //PARAMS FOR VIEW
+    angular.extend($scope,Meta.viewParams);
+    
+    if ($routeParams[Meta.id])
+        $scope.viewEditOrCreate = 'Editar';
+    else
+        $scope.viewEditOrCreate = 'Nuevo';
 
+    //FUNCTIONS
     $scope.create = function()
     {
         $scope.obj.$save(function(response)
@@ -38,6 +45,25 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
         });
     };
 
+    $scope.go = function(path)
+    {
+        $location.path(path);
+    };
+
+    $scope.onSubmit = function(form) {
+        // First we broadcast an event so all fields validate themselves
+        $scope.$broadcast('schemaFormValidate');
+
+        // Then we check if the form is valid
+        if (form.$valid) {
+            $scope.action();
+        }
+    };
+
+    $scope.action = function() {
+
+    };
+
     $scope.delete = function(obj)
     {
         if (obj) {
@@ -59,6 +85,27 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
                 $location.path(Meta.path);
             });
         }
+    };
+
+    $scope.initViewEditOrCreate = function()
+    {
+        if ($scope.viewEditOrCreate === 'Editar') {
+            $scope.findOne();
+            $scope.action = $scope.update;
+        }
+        else {
+            $scope.action = $scope.create;
+            $scope.obj = new Factory({});
+        }
+    };
+
+    $scope.actionButtons = {
+        type: "actions",
+        items: [
+            {type: 'button', style: 'btn-info', title: 'Lista', onClick: 'go("' + Meta.path + '")'},
+            {type: 'submit', style: 'btn-success', title: 'Ok'},
+            {type: 'button', style: 'btn-danger', title: 'Borrar', onClick: "delete()"}
+        ]
     };
 }
 
