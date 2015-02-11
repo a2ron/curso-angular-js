@@ -1,4 +1,4 @@
-<section data-ng-init="find()">
+<section ng-init="find()">
 
     <div class="panel panel-default">
         <!-- Default panel contents -->
@@ -24,7 +24,7 @@
         </table>
     </div>
 
-    <a class="btn btn-default" href="#!/{{path}}/crear">Añadir</a>
+    <a class="btn btn-success" href="#!/{{path}}/crear">Añadir</a>
 
     <div data-ng-hide="!objs || objs.length">
         Aún no hay {{name}}

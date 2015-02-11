@@ -1,0 +1,14 @@
+<ng-layout src="views/edit.client.view.html">
+
+    <div content_for="apuntes">
+        <section ng-init="findApuntes()">
+
+            <hr/>
+            <ul>
+                <li ng-repeat="apunte in apuntes">{{apunte.titulo}}</li>
+            </ul>
+
+        </section>  
+    </div>
+
+</ng-layout>

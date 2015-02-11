@@ -71,7 +71,7 @@ path: 'categorias'//redundante pero necesario
             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/:' + META.params.id, {
-                            templateUrl: 'views/edit.client.view.html',
+                            templateUrl: 'views/editCategoria.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         }).
                             when('/' + META.params.path + '/:' + META.params.id + '/edit', {

@@ -1,4 +1,3 @@
-
 function controllerBase($scope, $routeParams, $location, Factory, Meta)
 {
     //PARAMS FOR VIEW
@@ -7,7 +6,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
     if ($routeParams[Meta.id])
         $scope.viewEditOrCreate = 'Editar';
     else
-        $scope.viewEditOrCreate = 'Nuevo';
+        $scope.viewEditOrCreate = 'Crear';
 
     //FUNCTIONS
     $scope.create = function()

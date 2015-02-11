@@ -11,14 +11,6 @@
         <strong data-ng-bind="error"></strong>
     </div>
 
-
-    <div ng-show="'{{name}}' == 'Categorías'" >
-        <hr/>
-        <ul data-ng-init="findApuntes()">
-            <li ng-repeat="apunte in apuntes">{{apunte.titulo}}</li>
-        </ul>
-    </div>
-
-    <!--<pre>{{obj|json}}</pre>-->
+    <yield content_for="apuntes">
 
 </section>
