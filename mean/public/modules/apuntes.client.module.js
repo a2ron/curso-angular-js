@@ -2,16 +2,27 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
 {
     controllerBase($scope, $routeParams, $location, apuntesFactory, apuntesMETA);
 
-    function defSchema(categories)
+    var categories = [];
+    function defSchema()
     {
         //definir el schema del form ahora que tengo las categorias
         $scope.schema = {
             type: "object",
             properties: {
-                titulo: {type: "string", minLength: 2, title: "Título", required: true},
+                titulo: {
+                    type: "string",
+                    minLength: 2,
+                    title: "Título",
+                    required: true
+                },
                 descripcion: {
                     type: "string",
                     title: "Descripción"
+                },
+                importe: {
+                    title: "Importe",
+                    type: 'number',
+                    required: true
                 },
                 idCategoriaApunte: {
                     title: "Categoría",
@@ -22,12 +33,13 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
         $scope.form = [
             'titulo',
             'descripcion',
+            'importe',
             {
                 key: "idCategoriaApunte",
                 type: 'select',
                 titleMap: categories
             },
-            $scope.actionButtons 
+            $scope.actionButtons
         ];
 
         $scope.$apply();//for update interface
@@ -43,7 +55,7 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                 setTimeout(loadEnd, 200);
             }
             else {
-                var categories = [];
+                categories = [];
                 $scope.categoriaApunte = resCatQuery[0];
                 categories.push({
                     name: 'Seleccione una',
@@ -59,7 +71,7 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                         });
                     }
                 }
-                defSchema(categories);
+                defSchema();
             }
         }
         loadEnd();
@@ -79,8 +91,36 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
         }
         loadCategorias();
     };
-}
 
+
+    $scope.find = function()
+    {
+        $scope.objs = apuntesFactory.query();
+        //cargar el nombre de la categoria
+        loadCategorias();
+
+        function loadEnd()
+        {
+            console.log('loadEnd');
+            if ($scope.objs.length <= 0) {
+                setTimeout(loadEnd, 200);
+            }
+            else {
+                for (var i in $scope.objs)
+                {
+                    console.log($scope.objs[i]);
+                    if ($scope.objs[i].idCategoriaApunte) {
+                        var categ = filterFilter(categories, {value: $scope.objs[i].idCategoriaApunte})[0];
+                        if (categ)
+                            $scope.objs[i].categoriaName = categ.name;
+                    }
+                    $scope.$apply();
+                }
+            }
+        }
+        loadEnd();
+    };
+}
 var params = {
     nameModule: 'apuntes',
     path: 'apuntes',
@@ -99,8 +139,12 @@ var params = {
                 key: 'descripcion'
             },
             {
+                title: 'Importe',
+                key: 'importe'
+            },
+            {
                 title: 'Categoría',
-                key: 'idCategoriaApunte'
+                key: 'categoriaName'
             }
         ],
         path: 'apuntes'//redundante pero necesario
@@ -129,4 +173,5 @@ moduleCrudBase(params)
                             templateUrl: 'views/edit.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         });
-            }]);
+            }
+        ]);

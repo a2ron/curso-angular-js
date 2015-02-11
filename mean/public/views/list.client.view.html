@@ -15,9 +15,11 @@
             </thead>
             <tbody>
                 <tr ng-repeat="obj in objs">
-                    <th>{{$index}}</th>
+                    <th>           
+                        <a data-ng-href="#!/{{path}}/{{obj._id}}">{{$index}}</a>
+                    </th>
                     <td ng-repeat="field in listFields">
-                        <a data-ng-href="#!/{{path}}/{{obj._id}}">{{obj[field.key]}}</a>
+                        {{obj[field.key]}}
                     </td>
                 </tr>
             </tbody>

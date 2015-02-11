@@ -49,7 +49,7 @@ exports.controllerBase = function(exports, params)
 
     exports.list = function(req, res, next)
     {
-        params.Model.find().sort('-created').populate('creator').exec(function(err, objs)
+        params.Model.find().exec(function(err, objs)
         {
             if (err)
                 return next(err);

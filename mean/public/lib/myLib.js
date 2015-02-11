@@ -13,7 +13,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
     {
         $scope.obj.$save(function(response)
         {
-            $location.path(Meta.path);
+            $scope.go(Meta.path);
 
         }, function(errorResponse) {
             $scope.error = 'Error al guardar';
@@ -37,7 +37,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
     {
         $scope.obj.$update(function(response)
         {
-            $location.path(Meta.path);
+            $scope.go(Meta.path);
 
         }, function(errorResponse) {
             $scope.error = 'Error al guardar';
@@ -81,7 +81,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
         } else {
             $scope.obj.$remove(function()
             {
-                $location.path(Meta.path);
+                $scope.go(Meta.path);
             });
         }
     };
@@ -102,7 +102,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
         type: "actions",
         items: [
             {type: 'button', style: 'btn-info', title: 'Lista', onClick: 'go("' + Meta.path + '")'},
-            {type: 'submit', style: 'btn-success', title: 'Ok'},
+            {type: 'submit', style: 'btn-success', title: 'Guardar'},
             {type: 'button', style: 'btn-danger', title: 'Borrar', onClick: "delete()"}
         ]
     };
