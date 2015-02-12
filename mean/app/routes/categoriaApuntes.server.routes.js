@@ -11,4 +11,8 @@ var path = '/api/categorias';
 module.exports = function(app)
 {
     crudBase(cu, controller, app, path, param);
+    
+    app.route(path + '/ap/:op')
+            .get(cu.requiresLogin, controller.listWithApuntes);
+    app.param('op', controller.getParamOp);
 };

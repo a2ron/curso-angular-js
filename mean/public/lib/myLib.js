@@ -123,6 +123,11 @@ function moduleCrudBase(p)
                             url: 'api/apuntes/cat/:idCategoriaApunte',
                             method: 'GET',
                             isArray: true
+                        },
+                        queryWithApuntes: {
+                            url: 'api/categorias/ap/:op',
+                            method: 'GET',
+                            isArray: true
                         }
                     });
                 }])
