@@ -95,30 +95,12 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
 
     $scope.find = function()
     {
-        $scope.objs = apuntesFactory.query();
-        //cargar el nombre de la categoria
-        loadCategorias();
-
-        function loadEnd()
+        $scope.objs = apuntesFactory.query(function(res)
         {
-            console.log('loadEnd');
-            if ($scope.objs.length <= 0) {
-                setTimeout(loadEnd, 200);
-            }
-            else {
-                for (var i in $scope.objs)
-                {
-                    console.log($scope.objs[i]);
-                    if ($scope.objs[i].idCategoriaApunte) {
-                        var categ = filterFilter(categories, {value: $scope.objs[i].idCategoriaApunte})[0];
-                        if (categ)
-                            $scope.objs[i].categoriaName = categ.name;
-                    }
-                    $scope.$apply();
-                }
-            }
-        }
-        loadEnd();
+            angular.forEach(res, function(value, key) {
+                res[key].categoriaTitulo = res[key].idCategoriaApunte.titulo;
+            });
+        });
     };
 }
 var params = {
@@ -144,7 +126,7 @@ var params = {
             },
             {
                 title: 'Categoría',
-                key: 'categoriaName'
+                key: 'categoriaTitulo'
             }
         ],
         path: 'apuntes'//redundante pero necesario
