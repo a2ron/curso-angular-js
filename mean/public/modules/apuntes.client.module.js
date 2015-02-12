@@ -97,6 +97,7 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
     {
         $scope.objs = apuntesFactory.query(function(res)
         {
+            //preparing for angular-schema-form
             angular.forEach(res, function(value, key) {
                 res[key].categoriaTitulo = res[key].idCategoriaApunte.titulo;
             });
@@ -131,7 +132,14 @@ var params = {
         ],
         path: 'apuntes'//redundante pero necesario
     },
-    injection: apuntesController
+    injection: apuntesController,
+    moreActionsREST: {
+        search: {
+            url: 'api/apuntes/cat/:idCategoriaApunte',
+            method: 'GET',
+            isArray: true
+        }
+    }
 };
 
 moduleCrudBase(params)

@@ -1,8 +1,8 @@
 function controllerBase($scope, $routeParams, $location, Factory, Meta)
 {
     //PARAMS FOR VIEW
-    angular.extend($scope,Meta.viewParams);
-    
+    angular.extend($scope, Meta.viewParams);
+
     if ($routeParams[Meta.id])
         $scope.viewEditOrCreate = 'Editar';
     else
@@ -113,23 +113,16 @@ function moduleCrudBase(p)
     var injection = (p.injection) ? p.injection : ['$scope', '$routeParams', '$location', p.nameModule + "Factory", p.nameModule + 'META', controllerBase];
     return angular.module(p.nameModule, ['schemaForm'])
             .factory(p.nameModule + "Factory", ['$resource', function($resource) {
-                    var params = {};
-                    params[p.id] = '@_id';
-                    return $resource(p.pathAPI, params, {
+                    var actions = {
                         update: {
                             method: 'PUT'
-                        },
-                        search: {
-                            url: 'api/apuntes/cat/:idCategoriaApunte',
-                            method: 'GET',
-                            isArray: true
-                        },
-                        queryWithApuntes: {
-                            url: 'api/categorias/ap/:op',
-                            method: 'GET',
-                            isArray: true
                         }
-                    });
+                    };
+                    if (p.moreActionsREST)
+                        angular.extend(actions,p.moreActionsREST);
+                    var params = {};
+                    params[p.id] = '@_id';
+                    return $resource(p.pathAPI, params, actions);
                 }])
             .provider(p.nameModule + 'META', function() {
                 this.params = p;

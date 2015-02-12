@@ -71,7 +71,14 @@ var params = {
         ],
         path: 'categorias'//redundante pero necesario
     },
-    injection: categoriasController
+    injection: categoriasController,
+    moreActionsREST: {
+        queryWithApuntes: {
+            url: 'api/categorias/ap/:op',
+            method: 'GET',
+            isArray: true
+        }
+    }
 };
 
 moduleCrudBase(params)/* routes */
