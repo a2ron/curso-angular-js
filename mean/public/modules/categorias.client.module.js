@@ -65,8 +65,12 @@ var params = {
                 key: 'descripcion'
             },
             {
-                title: 'Importe',
+                title: 'Total',
                 key: 'sum'
+            },
+            {
+                title: 'Num.',
+                key: 'count'
             }
         ],
         path: 'categorias'//redundante pero necesario

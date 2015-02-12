@@ -14,40 +14,69 @@ exports.listWithApuntes = function(req, res, next)
 {
     var Apunte = require('mongoose').model('Apunte');
 
-    Apunte.aggregate([
-        {$group: {
-                _id: '$idCategoriaApunte',
-                sum: {$sum: '$importe'}
-            }}
-    ], function(err, sums) {
-        if (err) {
-            return next(err);
-        } else {
-            params.Model.find().exec(function(err, objs)
-            {
-                if (err)
-                    return next(err);
-                else {
-                    for (var i in objs) {
-                        var sum = (sums.filter(function(x) {
-                            return '' + x._id === '' + objs[i]._id;
-                        }))[0];
-                        if (sum) {
-                            objs[i] = objs[i].toJSON();
-                            objs[i].sum = sum.sum;
+    if (req.param('op') === 'sum') {
+        Apunte.aggregate([
+            {$group: {
+                    _id: '$idCategoriaApunte',
+                    sum: {$sum: '$importe'},
+                    count: {$sum: 1}
+                }}
+        ], function(err, sums) {
+            if (err) {
+                return next(err);
+            } else {
+                params.Model.find().exec(function(err, objs)
+                {
+                    if (err)
+                        return next(err);
+                    else {
+                        for (var i in objs) {
+                            var sum = (sums.filter(function(x) {
+                                return '' + x._id === '' + objs[i]._id;
+                            }))[0];
+                            if (sum) {
+                                objs[i] = objs[i].toJSON();
+                                objs[i].sum = sum.sum;
+                                objs[i].count = sum.count;
+                            }
                         }
+                        res.json(objs);
                     }
-                    res.json(objs);
-                }
 
-            });
-        }
-    });
+                });
+            }
+        });
+    }
+    else if (req.param('op') === 'fil') {
+        Apunte.aggregate([
+            {$group: {
+                    _id: '$idCategoriaApunte',
+                    sum: {$sum: '$importe'}
+                }}
+        ], function(err, sums) {
+            if (err) {
+                return next(err);
+            } else {
+                params.Model.find().exec(function(err, objs)
+                {
+                    if (err)
+                        return next(err);
+                    else {
+                        for (var i in objs) {
+                            var sum = (sums.filter(function(x) {
+                                return '' + x._id === '' + objs[i]._id;
+                            }))[0];
+                            if (sum) {
+                                objs[i] = objs[i].toJSON();
+                                objs[i].sum = sum.sum + 100;
+                            }
+                        }
+                        res.json(objs);
+                    }
 
-};
+                });
+            }
+        });
+    }
 
-exports.getParamOp = function(req, res, next, param)
-{
-    req['op'] = param;
-    next();
 };
