@@ -134,8 +134,8 @@ var params = {
     },
     injection: apuntesController,
     moreActionsREST: {
-        search: {
-            url: 'api/apuntes/cat/:idCategoriaApunte',
+        filter: {
+            url: 'api/apuntes/filter/:idCategoriaApunte/:yearIni/:monthIni/:dayIni/:yearFin/:monthFin/:dayFin',
             method: 'GET',
             isArray: true
         }

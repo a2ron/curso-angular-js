@@ -17,27 +17,73 @@ exports.list = function(req, res, next)
     {
         if (err)
             return next(err);
-        else{
-            res.json(objs);
-        }
-    });
-
-};
-
-exports.listFilter = function(req, res, next)
-{
-    params.Model.find({idCategoriaApunte: req.idCategoriaApunte}, function(err, objs)
-    {
-        if (err)
-            return next(err);
         else {
             res.json(objs);
         }
     });
+
 };
 
-exports.getByIdCategoriaApunte = function(req, res, next, idCategoriaApunte)
+/**
+ * Filtra apuntes con posibles filtros: categoria, fecha inicial y fecha final
+ *  - Determina los filtros segun los parametros en req: idCategoriaApunte,yearIni,monthIni,dayIni,yearFin,monthFin,dayFin
+ *  - Si idCategoriaApunte vale 0, considera que no hay filtro por categoria
+ *  - Si yearIni, monthIni y dayIni valen 0, considera que no hay filtro por fecha inicial
+ * @param {type} req
+ * @param {type} res
+ * @param {type} next
+ * @returns {undefined}
+ */
+exports.listFilter = function(req, res, next)
 {
-    req['idCategoriaApunte'] = idCategoriaApunte;
-    next();
+    var ok = true;
+    var filter = {};
+    //filter by categoria
+    if (req.param('idCategoriaApunte') && req.param('idCategoriaApunte') !== '0')
+    {
+        filter.idCategoriaApunte = req.param('idCategoriaApunte');
+    }
+    //filter by date
+    var filterDate = {};
+    //filter by date (start)
+    if (req.param('yearIni') && !(req.param('yearIni') === '0' && req.param('monthIni') === '0' && req.param('dayIni') === '0')) {
+        var start = new Date(Date.UTC(
+                req.param('yearIni') ? req.param('yearIni') : 0,
+                (req.param('monthIni') ? req.param('monthIni') - 1 : 0),
+                req.param('dayIni') ? req.param('dayIni') : 0));
+        if (start && start.getYear() > 0)
+            filterDate.$gte = start;
+        else
+            ok = false;
+    }
+    //filter by date (end)
+    if (req.param('yearFin')) {
+        var end = new Date(Date.UTC(
+                req.param('yearFin') ? req.param('yearFin') : 0,
+                (req.param('monthFin') ? req.param('monthFin') - 1 : 0),
+                req.param('dayFin') ? req.param('dayFin') : 0));
+        if (end && end.getYear() > 0)
+            filterDate.$lte = end;
+        else
+            ok = false;
+    }
+    if (Object.keys(filterDate).length > 0) {
+        filter.createdOn = filterDate;
+        console.log('Filter createdOn:');
+        console.log(filter.createdOn);
+    }
+    //find
+    if (ok) {
+        params.Model.find(filter, function(err, objs)
+        {
+            if (err)
+                return next(err);
+            else {
+                res.json(objs);
+            }
+        });
+    }
+    else
+        next();
+
 };

@@ -11,7 +11,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
                 setTimeout(loadEnd, 10);
             }
             else {
-                $scope.apuntes = apuntesFactory.search({
+                $scope.apuntes = apuntesFactory.filter({
                     idCategoriaApunte: $scope.obj._id
                 });
             }
