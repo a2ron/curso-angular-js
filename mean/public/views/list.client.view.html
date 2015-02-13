@@ -11,6 +11,14 @@
                 <tr>
                     <th>#</th>
                     <th ng-repeat="field in listFields">{{field.title}} </th>
+                    <th>
+                        <input type="radio"
+                               ng-model="$parent.idCategoriaSelected"
+                               value="0"
+                               name="idCategoriaSelected"
+                               ng-change="findApuntes()">
+                    </th>
+
                 </tr>
             </thead>
             <tbody>
@@ -21,15 +29,24 @@
                     <td ng-repeat="field in listFields">
                         {{obj[field.key]}}
                     </td>
+                    <td>
+                        <input type="radio"
+                               ng-model="$parent.idCategoriaSelected"
+                               value="{{obj._id}}"
+                               name="idCategoriaSelected"
+                               ng-change="findApuntes()">
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <a class="btn btn-success" href="#!/{{path}}/crear">Añadir</a>
-
     <div data-ng-hide="!objs || objs.length">
         Aún no hay {{name}}
     </div>
+
+    <a class="btn btn-success" href="#!/{{path}}/crear">Añadir</a>
+
+    <yield content_for="extra">
 
 </section>

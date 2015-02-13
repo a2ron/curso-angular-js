@@ -2,23 +2,14 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 {
     controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
 
+    $scope.idCategoriaSelected = 0;
     $scope.findApuntes = function()
     {
+        var filter = {};
+        filter.idCategoriaApunte = $scope.idCategoriaSelected;
+        $scope.apuntes = apuntesFactory.filter(filter);
 
-        function loadEnd()
-        {
-            if (!$scope.obj._id) {
-                setTimeout(loadEnd, 10);
-            }
-            else {
-                $scope.apuntes = apuntesFactory.filter({
-                    idCategoriaApunte: $scope.obj._id
-                });
-            }
-        }
-        loadEnd();
     };
-
 
     $scope.find = function()
     {
@@ -90,7 +81,7 @@ moduleCrudBase(params)/* routes */
             function($routeProvider, META) {
                 $routeProvider.
                         when('/' + META.params.path, {
-                            templateUrl: 'views/list.client.view.html',
+                            templateUrl: 'views/listCategorias.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/crear', {
