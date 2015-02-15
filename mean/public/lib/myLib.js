@@ -1,7 +1,7 @@
 function controllerBase($scope, $routeParams, $location, Factory, Meta)
 {
     $scope.loadStamp = Date.now();
-    
+
     //PARAMS FOR VIEW
     angular.extend($scope, Meta.viewParams);
 
@@ -22,9 +22,9 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
         });
     };
 
-    $scope.find = function()
+    $scope.find = function(onSuccess)
     {
-        $scope.objs = Factory.query();
+        $scope.objs = Factory.query(onSuccess);
     };
 
 
@@ -115,6 +115,7 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
         //default: nothing
 //        console.log($scope.itemSel);
     };
+    return $scope;
 
 }
 

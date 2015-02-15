@@ -1,15 +1,16 @@
 <ng-layout src="views/list.client.view.html">
 
-    <div content_for="extra" ng-show="apuntesFilter.length">
+    <div content_for="extra" >
+
+
         <hr/>
-        <h4>Apuntes -> {{itemSel}}</h4>
-        <section>
+<!--        <section ng-show="apuntesFilter.length"> 
 
             <div class="panel panel-default">
-                <!-- Default panel contents -->
-                <!--        <div class="panel-heading">Panel heading</div>
+                 Default panel contents 
+                        <div class="panel-heading">Panel heading</div>
                         <div class="panel-body">
-                        </div>-->
+                        </div>
 
                 <table class="table table-striped">
                     <thead>
@@ -38,8 +39,12 @@
             </div>
 
             <a class="btn btn-success" href="#!/apuntes/crear">Añadir apunte</a>
-
-        </section>  
+            <br/>
+            <br/>
+        </section>  -->
     </div>
 
 </ng-layout>
+
+<div class="gridStyle" ng-grid="gridOptions"></div>
+

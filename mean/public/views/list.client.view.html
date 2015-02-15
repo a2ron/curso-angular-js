@@ -6,46 +6,23 @@
                 <div class="panel-body">
                 </div>-->
 
-        <table class="table table-striped">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>#</th>
                     <th ng-repeat="field in listFields">{{field.title}} </th>
-                    <th>
-                        Sel.
-                    </th>
-
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="obj in objs">
+                <tr ng-class="{active: itemSel == obj._id}" class="clickable" ng-repeat="obj in objs" ng-click="changeSel(obj._id)">
                     <th>           
                         <a data-ng-href="#!/{{path}}/{{obj._id}}">{{$index}}</a>
                     </th>
                     <td ng-repeat="field in listFields">
                         {{obj[field.key]}}
                     </td>
-                    <td>
-                        <input type="radio"
-                               ng-model="$parent.itemSel"
-                               value="{{obj._id}}"
-                               name="sel"
-                               ng-change="changeSel()">
-                    </td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td ng-repeat="field in listFields"></td>
-                    <td>
-                        <input type="radio"
-                               ng-model="$parent.itemSel"
-                               value="{{loadStamp}}"
-                               name="sel"
-                               ng-click="changeSel('0')">
-                    </td>
-
-                </tr>
-            </tbody>
+             </tbody>
         </table>
     </div>
 

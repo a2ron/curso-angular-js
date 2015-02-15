@@ -1,21 +1,39 @@
 function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, filterFilter, apuntesFactory, categoriasApuntesMETA)
 {
-    controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
+    var parent = controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
 
-    $scope.findApuntes = function()
+    $scope.apuntes = [];
+    $scope.findApuntes = function(onSuccess)
     {
         var filter = {};
         filter.idCategoriaApunte = ($scope.obj) ? $scope.obj._id : 0;
-        $scope.apuntes = apuntesFactory.filter(filter);
+        $scope.apuntes = apuntesFactory.filter(filter, onSuccess);
     };
 
+    var find = parent.find;
     $scope.find = function()
     {
-        $scope.objs = categoriasApuntesFactory.queryWithApuntes({
-            op: 'sum'
-        }, function()
+        find(function()
         {
-            $scope.findApuntes();
+            $scope.findApuntes(function()
+            {
+                angular.forEach($scope.objs, function(obj, iObj)
+                {
+                    $scope.objs[iObj].sum = 0;
+                    $scope.objs[iObj].count = 0;
+                    $scope.objs[iObj].income = 0;
+                    $scope.objs[iObj].outcome = 0;
+                    var ac = filterFilter($scope.apuntes, {idCategoriaApunte: obj._id});
+                    angular.forEach(ac, function(a, key) {
+                        $scope.objs[iObj].sum += a.importe;
+                        $scope.objs[iObj].count++;
+                        if (a.importe > 0)
+                            $scope.objs[iObj].income += a.importe;
+                        else
+                            $scope.objs[iObj].outcome += a.importe;
+                    });
+                });
+            });
         });
     };
 
@@ -37,14 +55,16 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 
     $scope.changeSel = function(valueSel)
     {
-        if (valueSel)
-            $scope.itemSel = valueSel;
+        if (valueSel) {
+            $scope.itemSel = $scope.itemSel !== valueSel ? valueSel : '0';
+        }
         console.log($scope.itemSel);
         $scope.apuntesFilter = [];
         var showns = filterFilter($scope.apuntes, {idCategoriaApunte: $scope.itemSel});
         angular.forEach(showns, function(value, key) {
             $scope.apuntesFilter.push(showns[key]);
         });
+
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +83,37 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         '*',
         $scope.actionButtons
     ];
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    $scope.gridOptions = {
+        data: 'apuntes',
+        columnDefs: [
+            {field: 'idCategoriaApunte', displayName: 'Categoría'},
+            {field: 'titulo', displayName: 'Título'},
+            {field: 'descripcion', displayName: 'Descripción'},
+            {field: 'importe', displayName: 'Total'}
+        ],
+        showGroupPanel: true,
+        i18n: 'es'
+//        aggregateTemplate: "views/ngGrid-row-aggregate.template.html"
+    };
+
+//    $scope.aggFunc = function(row) {
+//        var total = 0;
+//        angular.forEach(row.children, function(cropEntry) {
+//            total += cropEntry.entity.importe;
+//        });
+//        return total.toString();
+//    };
+//    $scope.entryMaybePlural = function(row) {
+//        if (row.children.length > 1)
+//        {
+//            return "entries";
+//        }
+//        else
+//            return "entry";
+//    };
 }
 
 
@@ -86,24 +137,21 @@ var params = {
                 key: 'descripcion'
             },
             {
-                title: 'Total',
-                key: 'sum'
+                title: 'Income',
+                key: 'income'
             },
             {
-                title: 'Num.',
-                key: 'count'
+                title: 'Outcome',
+                key: 'outcome'
+            },
+            {
+                title: 'Total',
+                key: 'sum'
             }
         ],
         path: 'categorias'//redundante pero necesario
     },
-    injection: categoriasController,
-    moreActionsREST: {
-        queryWithApuntes: {
-            url: 'api/categorias/ap/:op',
-            method: 'GET',
-            isArray: true
-        }
-    }
+    injection: categoriasController
 };
 
 moduleCrudBase(params)/* routes */

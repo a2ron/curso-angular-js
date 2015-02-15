@@ -1,0 +1,14 @@
+.clickable {
+    cursor: pointer;
+    cursor: hand;
+}
+tr.active td,
+tr.active th
+{
+    background-color: lightyellow !important;
+}
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    height: 500px;
+}
