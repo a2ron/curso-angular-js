@@ -1,8 +1,9 @@
 <ng-layout src="views/list.client.view.html">
 
-    <div content_for="extra">
+    <div content_for="extra" ng-show="apuntesFilter.length">
         <hr/>
-        <section ng-init="findApuntes()">
+        <h4>Apuntes -> {{itemSel}}</h4>
+        <section>
 
             <div class="panel panel-default">
                 <!-- Default panel contents -->
@@ -20,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="apunte in apuntes">
+                        <tr ng-repeat="apunte in apuntesFilter">
                             <th>           
                                 <a data-ng-href="#!/apuntes/{{apunte._id}}">{{$index}}</a>
                             </th>

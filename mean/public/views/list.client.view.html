@@ -12,11 +12,7 @@
                     <th>#</th>
                     <th ng-repeat="field in listFields">{{field.title}} </th>
                     <th>
-                        <input type="radio"
-                               ng-model="$parent.idCategoriaSelected"
-                               value="0"
-                               name="idCategoriaSelected"
-                               ng-change="findApuntes()">
+                        Sel.
                     </th>
 
                 </tr>
@@ -31,11 +27,23 @@
                     </td>
                     <td>
                         <input type="radio"
-                               ng-model="$parent.idCategoriaSelected"
+                               ng-model="$parent.itemSel"
                                value="{{obj._id}}"
-                               name="idCategoriaSelected"
-                               ng-change="findApuntes()">
+                               name="sel"
+                               ng-change="changeSel()">
                     </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td ng-repeat="field in listFields"></td>
+                    <td>
+                        <input type="radio"
+                               ng-model="$parent.itemSel"
+                               value="{{loadStamp}}"
+                               name="sel"
+                               ng-click="changeSel('0')">
+                    </td>
+
                 </tr>
             </tbody>
         </table>

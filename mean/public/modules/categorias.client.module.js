@@ -1,24 +1,54 @@
-function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, $filter, apuntesFactory, categoriasApuntesMETA)
+function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, filterFilter, apuntesFactory, categoriasApuntesMETA)
 {
     controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
 
-    $scope.idCategoriaSelected = 0;
     $scope.findApuntes = function()
     {
         var filter = {};
-        filter.idCategoriaApunte = $scope.idCategoriaSelected;
+        filter.idCategoriaApunte = ($scope.obj) ? $scope.obj._id : 0;
         $scope.apuntes = apuntesFactory.filter(filter);
-
     };
 
     $scope.find = function()
     {
         $scope.objs = categoriasApuntesFactory.queryWithApuntes({
             op: 'sum'
+        }, function()
+        {
+            $scope.findApuntes();
         });
     };
 
-    /*definir el schema del form ahora que tengo las categorias*/
+
+    $scope.initViewEditOrCreate = function()
+    {
+        if ($scope.viewEditOrCreate === 'Editar') {
+            $scope.findOne(function()
+            {
+                $scope.findApuntes();
+            });
+            $scope.action = $scope.update;
+        }
+        else {
+            $scope.obj = new Factory({});
+            $scope.action = $scope.create;
+        }
+    };
+
+    $scope.changeSel = function(valueSel)
+    {
+        if (valueSel)
+            $scope.itemSel = valueSel;
+        console.log($scope.itemSel);
+        $scope.apuntesFilter = [];
+        var showns = filterFilter($scope.apuntes, {idCategoriaApunte: $scope.itemSel});
+        angular.forEach(showns, function(value, key) {
+            $scope.apuntesFilter.push(showns[key]);
+        });
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
     $scope.schema = {
         type: "object",
         properties: {

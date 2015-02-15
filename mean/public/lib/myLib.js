@@ -1,5 +1,7 @@
 function controllerBase($scope, $routeParams, $location, Factory, Meta)
 {
+    $scope.loadStamp = Date.now();
+    
     //PARAMS FOR VIEW
     angular.extend($scope, Meta.viewParams);
 
@@ -26,11 +28,11 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
     };
 
 
-    $scope.findOne = function()
+    $scope.findOne = function(onSuccess)
     {
         var p = {};
         p[Meta.id] = $routeParams[Meta.id];
-        $scope.obj = Factory.get(p);
+        $scope.obj = Factory.get(p, onSuccess);
     };
 
     $scope.update = function()
@@ -106,6 +108,14 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
             {type: 'button', style: 'btn-danger', title: 'Borrar', onClick: "delete()"}
         ]
     };
+
+    $scope.itemSel = null;
+    $scope.changeSel = function()
+    {
+        //default: nothing
+//        console.log($scope.itemSel);
+    };
+
 }
 
 function moduleCrudBase(p)
@@ -119,7 +129,7 @@ function moduleCrudBase(p)
                         }
                     };
                     if (p.moreActionsREST)
-                        angular.extend(actions,p.moreActionsREST);
+                        angular.extend(actions, p.moreActionsREST);
                     var params = {};
                     params[p.id] = '@_id';
                     return $resource(p.pathAPI, params, actions);
