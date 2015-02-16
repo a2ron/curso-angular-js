@@ -62,8 +62,9 @@ exports.listFilter = function(req, res, next)
                 req.param('yearFin') ? req.param('yearFin') : 0,
                 (req.param('monthFin') ? req.param('monthFin') - 1 : 0),
                 req.param('dayFin') ? req.param('dayFin') : 0));
+        end.setDate(end.getDate() + 1);
         if (end && end.getYear() > 0)
-            filterDate.$lte = end;
+            filterDate.$lt = end;
         else
             ok = false;
     }
@@ -74,7 +75,7 @@ exports.listFilter = function(req, res, next)
     }
     //find
     if (ok) {
-        params.Model.find(filter, function(err, objs)
+        params.Model.find(filter).populate('idCategoriaApunte').exec(function(err, objs)
         {
             if (err)
                 return next(err);

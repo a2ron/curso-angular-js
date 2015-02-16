@@ -7,6 +7,15 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     {
         var filter = {};
         filter.idCategoriaApunte = ($scope.obj) ? $scope.obj._id : 0;
+        
+        filter.yearIni = $scope.ini.getFullYear();
+        filter.monthIni = $scope.ini.getMonth()+1;
+        filter.dayIni = $scope.ini.getDate();
+        
+        filter.yearFin = $scope.fin.getFullYear();
+        filter.monthFin = $scope.fin.getMonth()+1;
+        filter.dayFin = $scope.fin.getDate();
+        
         $scope.apuntes = apuntesFactory.filter(filter, onSuccess);
     };
 
@@ -23,7 +32,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
                     $scope.objs[iObj].count = 0;
                     $scope.objs[iObj].income = 0;
                     $scope.objs[iObj].outcome = 0;
-                    var ac = filterFilter($scope.apuntes, {idCategoriaApunte: obj._id});
+                    var ac = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: obj._id}});
                     angular.forEach(ac, function(a, key) {
                         $scope.objs[iObj].sum += a.importe;
                         $scope.objs[iObj].count++;
@@ -89,7 +98,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     $scope.gridOptions = {
         data: 'apuntes',
         columnDefs: [
-            {field: 'idCategoriaApunte', displayName: 'Categoría'},
+            {field: 'idCategoriaApunte.titulo', displayName: 'Categoría'},
             {field: 'titulo', displayName: 'Título'},
             {field: 'descripcion', displayName: 'Descripción'},
             {field: 'importe', displayName: 'Total'}
@@ -114,6 +123,21 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 //        else
 //            return "entry";
 //    };
+
+    $scope.fin = new Date();
+    $scope.ini = new Date($scope.fin.getFullYear(),$scope.fin.getMonth(),1);
+
+    $scope.dateOptions = {
+    formatYear: 'yy',
+        startingDay: 1
+    };
+
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
 }
 
 
