@@ -24,7 +24,11 @@ var ApunteSchema = new Schema({
         ref: 'CategoriaApunte',
         required: 'La Categoría del Apunte es obligatoria'
     },
-    importe: Number
+    importe: Number,
+    computable: {
+        type: Boolean,
+        default: true
+    }
 });
 //Crear el modelo 'Apunte' a partir del esquema
 mongoose.model('Apunte', ApunteSchema);

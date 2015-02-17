@@ -27,6 +27,11 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                 idCategoriaApunte: {
                     title: "Categoría",
                     type: 'string'
+                },
+                computable: {
+                    title: "Computable",
+                    type: 'boolean',
+                    default: true
                 }
             }
         };
@@ -39,6 +44,7 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                 type: 'select',
                 titleMap: categories
             },
+            'computable',
             $scope.actionButtons
         ];
 

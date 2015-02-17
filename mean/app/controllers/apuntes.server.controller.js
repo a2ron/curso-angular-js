@@ -4,7 +4,7 @@ var cbase = require('../../app/controllers/controllerBase.server.controller.js')
 var params = {
     Model: require('mongoose').model('Apunte'),
     reqModel: 'apunte',
-    acceptedData: ['titulo', 'descripcion', 'idCategoriaApunte', 'importe']
+    acceptedData: ['titulo', 'descripcion', 'idCategoriaApunte', 'importe', 'computable']
 };
 
 
