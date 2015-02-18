@@ -1,3 +1,5 @@
+var scope = angular.element().scope();
+
 function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, filterFilter, apuntesFactory, categoriasApuntesMETA)
 {
     var parent = controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
@@ -7,15 +9,15 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     {
         var filter = {};
         filter.idCategoriaApunte = ($scope.obj) ? $scope.obj._id : 0;
-        
+
         filter.yearIni = $scope.ini.getFullYear();
-        filter.monthIni = $scope.ini.getMonth()+1;
+        filter.monthIni = $scope.ini.getMonth() + 1;
         filter.dayIni = $scope.ini.getDate();
-        
+
         filter.yearFin = $scope.fin.getFullYear();
-        filter.monthFin = $scope.fin.getMonth()+1;
+        filter.monthFin = $scope.fin.getMonth() + 1;
         filter.dayFin = $scope.fin.getDate();
-        
+
         $scope.apuntes = apuntesFactory.filter(filter, onSuccess);
     };
 
@@ -26,22 +28,47 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         {
             $scope.findApuntes(function()
             {
+                $scope.tSum = 0;
+                $scope.tSumC = 0;
+                $scope.tIn = 0;
+                $scope.tExpense = 0;
+                $scope.tInC = 0;
+                $scope.tExpenseC = 0;
                 angular.forEach($scope.objs, function(obj, iObj)
                 {
                     $scope.objs[iObj].sum = 0;
+                    $scope.objs[iObj].sumC = 0;
                     $scope.objs[iObj].count = 0;
                     $scope.objs[iObj].income = 0;
-                    $scope.objs[iObj].outcome = 0;
+                    $scope.objs[iObj].incomeC = 0;
+                    $scope.objs[iObj].expense = 0;
+                    $scope.objs[iObj].expenseC = 0;
                     var ac = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: obj._id}});
                     angular.forEach(ac, function(a, key) {
                         $scope.objs[iObj].sum += a.importe;
+                        if (a.computable)
+                            $scope.objs[iObj].sumC += a.importe;
                         $scope.objs[iObj].count++;
-                        if (a.importe > 0)
+                        if (a.importe > 0) {
                             $scope.objs[iObj].income += a.importe;
-                        else
-                            $scope.objs[iObj].outcome += a.importe;
+                            if (a.computable)
+                                $scope.objs[iObj].incomeC += a.importe;
+                        }
+
+                        else {
+                            $scope.objs[iObj].expense += a.importe;
+                            if (a.computable)
+                                $scope.objs[iObj].expenseC += a.importe;
+                        }
                     });
+                    $scope.tSum += $scope.objs[iObj].sum;
+                    $scope.tSumC += $scope.objs[iObj].sumC;
+                    $scope.tIn += $scope.objs[iObj].income;
+                    $scope.tExpense += $scope.objs[iObj].expense;
+                    $scope.tInC += $scope.objs[iObj].incomeC;
+                    $scope.tExpenseC += $scope.objs[iObj].expenseC;
                 });
+
             });
         });
     };
@@ -104,6 +131,9 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             {field: 'importe', displayName: 'Total'}
         ],
         showGroupPanel: true,
+        plugins: [
+            new ngGridFlexibleHeightPlugin()
+        ],
         i18n: 'es'
 //        aggregateTemplate: "views/ngGrid-row-aggregate.template.html"
     };
@@ -125,10 +155,10 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 //    };
 
     $scope.fin = new Date();
-    $scope.ini = new Date($scope.fin.getFullYear(),$scope.fin.getMonth(),1);
+    $scope.ini = new Date($scope.fin.getFullYear(), $scope.fin.getMonth(), 1);
 
     $scope.dateOptions = {
-    formatYear: 'yy',
+        formatYear: 'yy',
         startingDay: 1
     };
 
@@ -138,6 +168,39 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 
         $scope.opened = true;
     };
+
+    $scope.gridOptionsCategorias = {
+        init: 'find()',
+        data: 'objs',
+        columnDefs: [
+            {field: 'titulo', displayName: 'Título'},
+            {field: 'descripcion', displayName: 'Descripción'},
+            {field: 'income', displayName: 'In'},
+            {field: 'expense', displayName: 'Out'},
+            {field: 'sum', displayName: 'Total'},
+            {field: 'incomeC', displayName: 'In ©'},
+            {field: 'expenseC', displayName: 'Out ©'},
+            {field: 'sumC', displayName: 'Total ©'}
+        ],
+        showFooter: true,
+        footerTemplate: 'lib/ng-grid-plugins/ngGridSummaryPlugin.template.html',
+        footerRowHeight: 30,
+        plugins: [
+            new ngGridFlexibleHeightPlugin(),
+            new ngGridSummaryPlugin({
+                columns: [
+                    {index: 2},
+                    {index: 3},
+                    {index: 4},
+                    {index: 5},
+                    {index: 6},
+                    {index: 7}
+                ]})
+        ],
+        i18n: 'es',
+//        multiSelect: false
+    };
+
 }
 
 
@@ -161,18 +224,31 @@ var params = {
                 key: 'descripcion'
             },
             {
-                title: 'Income',
+                title: 'In',
                 key: 'income'
             },
             {
-                title: 'Outcome',
-                key: 'outcome'
+                title: 'Out',
+                key: 'expense'
             },
             {
                 title: 'Total',
                 key: 'sum'
+            },
+            {
+                title: 'In ©',
+                key: 'incomeC'
+            },
+            {
+                title: 'Out ©',
+                key: 'expenseC'
+            },
+            {
+                title: 'Total ©',
+                key: 'sumC'
             }
-        ],
+        ]
+        ,
         path: 'categorias'//redundante pero necesario
     },
     injection: categoriasController

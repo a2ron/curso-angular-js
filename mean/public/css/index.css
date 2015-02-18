@@ -10,5 +10,5 @@ tr.active th
 
 .gridStyle {
     border: 1px solid rgb(212,212,212);
-    height: 500px;
+    /*min-height: 200px;*/
 }
