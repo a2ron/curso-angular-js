@@ -25,9 +25,8 @@ ngGridSummaryPlugin = function(options)
     {
         var sum = 0;
         angular.forEach(gridInstance.filteredRows, function(row, i) {
-            sum += row.entity[field];
+            sum += parseInt(row.entity[field]);
         });
-        console.log(sum);
         return sum;
     }
 
@@ -46,15 +45,17 @@ ngGridSummaryPlugin = function(options)
         childScope.$parent['ngGridSummaryPlugin'] = {};
         childScope.$parent['ngGridSummaryPlugin'].columns = options.columns;
         childScope.$parent['ngGridSummaryPlugin'].values = [];
+        
+        //TODO: mejorar la actualización
         function reload() {
             setTimeout(function() {
-
                 angular.forEach(options.columns, function(col, i)
                 {
                     childScope.$parent['ngGridSummaryPlugin'].values[col.index] = suma(columns[col.index].field);
                 });
-                            reload(); //TODO
-            }, 1000);
+                childScope.$apply();
+                reload();
+            }, 250);
         }
         reload();
 

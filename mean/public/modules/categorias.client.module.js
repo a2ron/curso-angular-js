@@ -128,7 +128,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             {field: 'idCategoriaApunte.titulo', displayName: 'Categoría'},
             {field: 'titulo', displayName: 'Título'},
             {field: 'descripcion', displayName: 'Descripción'},
-            {field: 'importe', displayName: 'Total'}
+            {field: 'importe', displayName: 'Importe'}
         ],
         showGroupPanel: true,
         plugins: [
@@ -174,7 +174,6 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         data: 'objs',
         columnDefs: [
             {field: 'titulo', displayName: 'Título'},
-            {field: 'descripcion', displayName: 'Descripción'},
             {field: 'income', displayName: 'In'},
             {field: 'expense', displayName: 'Out'},
             {field: 'sum', displayName: 'Total'},
@@ -189,16 +188,17 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             new ngGridFlexibleHeightPlugin(),
             new ngGridSummaryPlugin({
                 columns: [
+                    {index: 1},
                     {index: 2},
                     {index: 3},
                     {index: 4},
                     {index: 5},
-                    {index: 6},
-                    {index: 7}
-                ]})
+                    {index: 6}
+                ]
+            })
         ],
         i18n: 'es',
-//        multiSelect: false
+        multiSelect: false
     };
 
 }
