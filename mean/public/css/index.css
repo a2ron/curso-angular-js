@@ -12,3 +12,7 @@ tr.active th
     border: 1px solid rgb(212,212,212);
     /*min-height: 200px;*/
 }
+
+body{
+    min-height: 1000px;
+}

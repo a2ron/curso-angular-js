@@ -1,76 +1,78 @@
-<div class="row">
-    <div class="col-md-6">
-        <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="ini" 
-                   is-open="opened"  datepicker-options="dateOptions" close-text="Cerrar"
-                   ng-change="find()" />
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-        </p>
+<section ng-init="find()">
+
+    <div class="row">
+        <div class="col-md-6">
+            <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="ini" 
+                       is-open="opened"  datepicker-options="dateOptions" close-text="Cerrar"
+                       ng-change="find()" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+
+        <div class="col-md-6">
+            <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="fin" 
+                       is-open="opened"  datepicker-options="dateOptions" close-text="Cerrar" 
+                       ng-change="find()" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
     </div>
 
-    <div class="col-md-6">
-        <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="fin" 
-                   is-open="opened"  datepicker-options="dateOptions" close-text="Cerrar" 
-                   ng-change="find()" />
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-        </p>
-    </div>
-</div>
+    <!--<ng-layout src="views/list.client.view.html">
+    
+        <div content_for="extra" >
+    
+    
+            <hr/>
+                    <section ng-show="apuntesFilter.length"> 
+            
+                        <div class="panel panel-default">
+                             Default panel contents 
+                                    <div class="panel-heading">Panel heading</div>
+                                    <div class="panel-body">
+                                    </div>
+            
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Título</th>
+                                        <th>Descripción</th>
+                                        <th>Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="apunte in apuntesFilter">
+                                        <th>           
+                                            <a data-ng-href="#!/apuntes/{{apunte._id}}">{{$index}}</a>
+                                        </th>
+                                        <td>{{apunte.titulo}}</td>
+                                        <td>{{apunte.descripcion}}</td>
+                                        <td>{{apunte.importe}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            
+                        <div data-ng-hide="!apuntes || apuntes.length">
+                            No hay apuntes
+                        </div>
+            
+                        <a class="btn btn-success" href="#!/apuntes/crear">Añadir apunte</a>
+                        <br/>
+                        <br/>
+                    </section>  
+        </div>
+    
+    </ng-layout>-->
 
-<ng-layout src="views/list.client.view.html">
-
-    <div content_for="extra" >
-
-
-        <hr/>
-        <!--        <section ng-show="apuntesFilter.length"> 
-        
-                    <div class="panel panel-default">
-                         Default panel contents 
-                                <div class="panel-heading">Panel heading</div>
-                                <div class="panel-body">
-                                </div>
-        
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Título</th>
-                                    <th>Descripción</th>
-                                    <th>Importe</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="apunte in apuntesFilter">
-                                    <th>           
-                                        <a data-ng-href="#!/apuntes/{{apunte._id}}">{{$index}}</a>
-                                    </th>
-                                    <td>{{apunte.titulo}}</td>
-                                    <td>{{apunte.descripcion}}</td>
-                                    <td>{{apunte.importe}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-        
-                    <div data-ng-hide="!apuntes || apuntes.length">
-                        No hay apuntes
-                    </div>
-        
-                    <a class="btn btn-success" href="#!/apuntes/crear">Añadir apunte</a>
-                    <br/>
-                    <br/>
-                </section>  -->
-    </div>
-
-</ng-layout>
-
-<div class="gridStyle" ng-grid="gridOptionsCategorias"></div>
-
-<div class="gridStyle" ng-grid="gridOptions"></div>
-
+    <div class="gridStyle" ng-grid="gridOptionsCategorias"></div>
+    <hr/>
+    <div class="gridStyle" ng-grid="gridOptions"></div>
+</section>

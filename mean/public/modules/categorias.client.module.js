@@ -91,17 +91,20 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 
     $scope.changeSel = function(valueSel)
     {
+        console.log(valueSel);
         if (valueSel) {
             $scope.itemSel = $scope.itemSel !== valueSel ? valueSel : '0';
         }
         console.log($scope.itemSel);
         $scope.apuntesFilter = [];
-        var showns = filterFilter($scope.apuntes, {idCategoriaApunte: $scope.itemSel});
+        var showns = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: $scope.itemSel}});
         angular.forEach(showns, function(value, key) {
             $scope.apuntesFilter.push(showns[key]);
         });
+        console.log($scope.apuntes);
 
     };
+    $scope.apuntesFilter = $scope.apuntes;
 
     ////////////////////////////////////////////////////////////////////////////////////
 
@@ -123,7 +126,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     ////////////////////////////////////////////////////////////////////////////////////
 
     $scope.gridOptions = {
-        data: 'apuntes',
+        data: 'apuntesFilter',
         columnDefs: [
             {field: 'idCategoriaApunte.titulo', displayName: 'Categoría'},
             {field: 'titulo', displayName: 'Título'},
@@ -135,7 +138,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             new ngGridFlexibleHeightPlugin()
         ],
         i18n: 'es'
-//        aggregateTemplate: "views/ngGrid-row-aggregate.template.html"
+                //        aggregateTemplate: "views/ngGrid-row-aggregate.template.html"
     };
 
 //    $scope.aggFunc = function(row) {
@@ -198,7 +201,8 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             })
         ],
         i18n: 'es',
-        multiSelect: false
+        multiSelect: false,
+        rowTemplate: '<div ng-click="changeSel(row.entity._id)" ng-style="{\'cursor\': row.cursor, \'z-index\': col.zIndex() }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}" ng-cell></div>'
     };
 
 }
