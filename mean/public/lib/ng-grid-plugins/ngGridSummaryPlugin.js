@@ -12,8 +12,6 @@ ngGridSummaryPlugin = function(options)
                     '<div ng-repeat="f in ngGridSummaryPlugin.columns" class="ngCell col{{f.index}} col{{f.index}}t"><div class="ngCellText col{{f.index}} co{{f.index}}t"><span ng-bind="ngGridSummaryPlugin.values[{{f.index}}]"></span></div></div>' +
                     '</div>';
         }
-        else
-            console.log(gridInstance.config.footerTemplate);
         if (!gridInstance.config.footerRowHeight) {
             gridInstance.config.footerRowHeight = 30;
         }

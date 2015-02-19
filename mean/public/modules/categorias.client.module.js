@@ -19,6 +19,8 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         filter.dayFin = $scope.fin.getDate();
 
         $scope.apuntes = apuntesFactory.filter(filter, onSuccess);
+        $scope.apuntesFilter = [];
+
     };
 
     var find = parent.find;
@@ -88,23 +90,6 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             $scope.action = $scope.create;
         }
     };
-
-    $scope.changeSel = function(valueSel)
-    {
-        console.log(valueSel);
-        if (valueSel) {
-            $scope.itemSel = $scope.itemSel !== valueSel ? valueSel : '0';
-        }
-        console.log($scope.itemSel);
-        $scope.apuntesFilter = [];
-        var showns = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: $scope.itemSel}});
-        angular.forEach(showns, function(value, key) {
-            $scope.apuntesFilter.push(showns[key]);
-        });
-        console.log($scope.apuntes);
-
-    };
-    $scope.apuntesFilter = $scope.apuntes;
 
     ////////////////////////////////////////////////////////////////////////////////////
 
@@ -185,7 +170,6 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             {field: 'sumC', displayName: 'Total ©'}
         ],
         showFooter: true,
-        footerTemplate: 'lib/ng-grid-plugins/ngGridSummaryPlugin.template.html',
         footerRowHeight: 30,
         plugins: [
             new ngGridFlexibleHeightPlugin(),
@@ -200,9 +184,23 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
                 ]
             })
         ],
+        //Callback for when you want to validate something after selection.
+        afterSelectionChange: function(row) {
+            if (row.selected)
+            {
+                var showns = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: row.entity._id}});
+                angular.forEach(showns, function(value, key) {
+                    $scope.apuntesFilter.push(showns[key]);
+                });
+            }
+            else
+            {
+                $scope.apuntesFilter = filterFilter($scope.apuntesFilter, {idCategoriaApunte: {_id: "!" + row.entity._id}});
+            }
+            $(window).resize();//for ng-show ng-grid bug
+        },
         i18n: 'es',
-        multiSelect: false,
-        rowTemplate: '<div ng-click="changeSel(row.entity._id)" ng-style="{\'cursor\': row.cursor, \'z-index\': col.zIndex() }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}" ng-cell></div>'
+        footerTemplate: 'lib/ng-grid-plugins/ngGridSummaryPlugin.template.html'
     };
 
 }
