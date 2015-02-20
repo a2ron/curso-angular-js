@@ -23,7 +23,7 @@ ngGridSummaryPlugin = function(options)
     {
         var sum = 0;
         angular.forEach(gridInstance.filteredRows, function(row, i) {
-            sum += parseInt(row.entity[field]);
+            sum += parseFloat(row.entity[field]);
         });
         return sum;
     }

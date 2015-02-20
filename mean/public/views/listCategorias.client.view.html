@@ -24,55 +24,11 @@
         </div>
     </div>
 
-    <!--<ng-layout src="views/list.client.view.html">
-    
-        <div content_for="extra" >
-    
-    
-            <hr/>
-                    <section ng-show="apuntesFilter.length"> 
-            
-                        <div class="panel panel-default">
-                             Default panel contents 
-                                    <div class="panel-heading">Panel heading</div>
-                                    <div class="panel-body">
-                                    </div>
-            
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Título</th>
-                                        <th>Descripción</th>
-                                        <th>Importe</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="apunte in apuntesFilter">
-                                        <th>           
-                                            <a data-ng-href="#!/apuntes/{{apunte._id}}">{{$index}}</a>
-                                        </th>
-                                        <td>{{apunte.titulo}}</td>
-                                        <td>{{apunte.descripcion}}</td>
-                                        <td>{{apunte.importe}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-            
-                        <div data-ng-hide="!apuntes || apuntes.length">
-                            No hay apuntes
-                        </div>
-            
-                        <a class="btn btn-success" href="#!/apuntes/crear">Añadir apunte</a>
-                        <br/>
-                        <br/>
-                    </section>  
-        </div>
-    
+<!--    <ng-layout src="views/list.client.view.html">
     </ng-layout>-->
-
+    
+    <hr/>
     <div class="gridStyle" ng-grid="gridOptionsCategorias"></div>
     <hr/>
-    <div ng-show="apuntesFilter.length > 0" class="gridStyle" ng-grid="gridOptions"></div>
+    <div ng-show="apuntesFilter.length" class="gridStyle" ng-grid="gridOptions"></div>
 </section>

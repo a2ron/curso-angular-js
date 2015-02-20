@@ -86,7 +86,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             $scope.action = $scope.update;
         }
         else {
-            $scope.obj = new Factory({});
+            $scope.obj = new categoriasApuntesFactory({});
             $scope.action = $scope.create;
         }
     };
@@ -123,7 +123,6 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             new ngGridFlexibleHeightPlugin()
         ],
         i18n: 'es'
-                //        aggregateTemplate: "views/ngGrid-row-aggregate.template.html"
     };
 
 //    $scope.aggFunc = function(row) {
@@ -157,12 +156,13 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         $scope.opened = true;
     };
 
+    var cellFilter = 'number:1';
     $scope.gridOptionsCategorias = {
         init: 'find()',
         data: 'objs',
         columnDefs: [
             {field: 'titulo', displayName: 'Título'},
-            {field: 'income', displayName: 'In'},
+            {field: 'income', displayName: 'In', cellFilter: cellFilter},
             {field: 'expense', displayName: 'Out'},
             {field: 'sum', displayName: 'Total'},
             {field: 'incomeC', displayName: 'In ©'},
@@ -175,17 +175,19 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             new ngGridFlexibleHeightPlugin(),
             new ngGridSummaryPlugin({
                 columns: [
-                    {index: 1},
-                    {index: 2},
-                    {index: 3},
-                    {index: 4},
-                    {index: 5},
-                    {index: 6}
+                    {index: 1, cellFilter: cellFilter},
+                    {index: 2, cellFilter: cellFilter},
+                    {index: 3, cellFilter: cellFilter},
+                    {index: 4, cellFilter: cellFilter},
+                    {index: 5, cellFilter: cellFilter},
+                    {index: 6, cellFilter: cellFilter}
                 ]
             })
         ],
         //Callback for when you want to validate something after selection.
         afterSelectionChange: function(row) {
+            $scope.apuntesFilter = filterFilter($scope.apuntesFilter, {idCategoriaApunte: {_id: "!" + row.entity._id}});
+
             if (row.selected)
             {
                 var showns = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: row.entity._id}});
@@ -193,13 +195,10 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
                     $scope.apuntesFilter.push(showns[key]);
                 });
             }
-            else
-            {
-                $scope.apuntesFilter = filterFilter($scope.apuntesFilter, {idCategoriaApunte: {_id: "!" + row.entity._id}});
-            }
             $(window).resize();//for ng-show ng-grid bug
         },
         i18n: 'es',
+        multiSelect: false,
         footerTemplate: 'lib/ng-grid-plugins/ngGridSummaryPlugin.template.html'
     };
 
