@@ -1,4 +1,7 @@
 <section ng-init="find()">
+    
+    <a class="btn btn-success" href="#!/{{path}}/crear">Añadir</a>
+    <hr/>
 
     <div class="row">
         <div class="col-md-6">
@@ -24,10 +27,9 @@
         </div>
     </div>
 
-<!--    <ng-layout src="views/list.client.view.html">
-    </ng-layout>-->
-    
-    <hr/>
+    <!--    <ng-layout src="views/list.client.view.html">
+        </ng-layout>-->
+
     <div class="gridStyle" ng-grid="gridOptionsCategorias"></div>
     <hr/>
     <div ng-show="apuntesFilter.length" class="gridStyle" ng-grid="gridOptions"></div>

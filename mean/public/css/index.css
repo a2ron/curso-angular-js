@@ -16,3 +16,8 @@ tr.active th
 body{
     padding-bottom: 50px;
 }
+
+.cellNumber
+{
+    text-align:right;
+}

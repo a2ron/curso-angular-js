@@ -1,6 +1,6 @@
 var scope = angular.element().scope();
 
-function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, filterFilter, apuntesFactory, categoriasApuntesMETA)
+function categoriasController($scope, $routeParams, $location, categoriasApuntesFactory, filterFilter, apuntesFactory, categoriasApuntesMETA, apuntesMETA)
 {
     var parent = controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
 
@@ -108,21 +108,24 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         $scope.actionButtons
     ];
 
+    var cellFilter = 'number:2';
+
     ////////////////////////////////////////////////////////////////////////////////////
 
     $scope.gridOptions = {
         data: 'apuntesFilter',
         columnDefs: [
             {field: 'idCategoriaApunte.titulo', displayName: 'Categoría'},
-            {field: 'titulo', displayName: 'Título'},
+            {field: 'titulo', displayName: 'Título', cellLinkPath: apuntesMETA.path},
             {field: 'descripcion', displayName: 'Descripción'},
-            {field: 'importe', displayName: 'Importe'}
+            {field: 'importe', displayName: 'Importe', cellFilter: cellFilter, cellClass: 'cellNumber'}
         ],
         showGroupPanel: true,
         plugins: [
             new ngGridFlexibleHeightPlugin()
         ],
-        i18n: 'es'
+        i18n: 'es',
+        rowTemplate: 'views/ng-grid-row.template.html'
     };
 
 //    $scope.aggFunc = function(row) {
@@ -156,18 +159,23 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         $scope.opened = true;
     };
 
-    var cellFilter = 'number:1';
+
+    $scope.hasCellLinkPath = function(col, v)
+    {
+        return col.colDef.hasOwnProperty('cellLinkPath');
+    };
+
     $scope.gridOptionsCategorias = {
         init: 'find()',
         data: 'objs',
         columnDefs: [
-            {field: 'titulo', displayName: 'Título'},
-            {field: 'income', displayName: 'In', cellFilter: cellFilter},
-            {field: 'expense', displayName: 'Out'},
-            {field: 'sum', displayName: 'Total'},
-            {field: 'incomeC', displayName: 'In ©'},
-            {field: 'expenseC', displayName: 'Out ©'},
-            {field: 'sumC', displayName: 'Total ©'}
+            {field: 'titulo', displayName: 'Título', cellLinkPath: categoriasApuntesMETA.path},
+            {field: 'income', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            {field: 'expense', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            {field: 'sum', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            {field: 'incomeC', displayName: 'In ©', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            {field: 'expenseC', displayName: 'Out ©', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            {field: 'sumC', displayName: 'Total ©', cellFilter: cellFilter, cellClass: 'cellNumber'}
         ],
         showFooter: true,
         footerRowHeight: 30,
@@ -175,12 +183,12 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             new ngGridFlexibleHeightPlugin(),
             new ngGridSummaryPlugin({
                 columns: [
-                    {index: 1, cellFilter: cellFilter},
-                    {index: 2, cellFilter: cellFilter},
-                    {index: 3, cellFilter: cellFilter},
-                    {index: 4, cellFilter: cellFilter},
-                    {index: 5, cellFilter: cellFilter},
-                    {index: 6, cellFilter: cellFilter}
+                    {index: 1},
+                    {index: 2},
+                    {index: 3},
+                    {index: 4},
+                    {index: 5},
+                    {index: 6}
                 ]
             })
         ],
@@ -199,7 +207,8 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         },
         i18n: 'es',
         multiSelect: false,
-        footerTemplate: 'lib/ng-grid-plugins/ngGridSummaryPlugin.template.html'
+        footerTemplate: 'views/ng-grid-footer.template.html',
+        rowTemplate: 'views/ng-grid-row.template.html'
     };
 
 }
