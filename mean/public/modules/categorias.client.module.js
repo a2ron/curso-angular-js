@@ -26,52 +26,58 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     var find = parent.find;
     $scope.find = function()
     {
-        find(function()
-        {
-            $scope.findApuntes(function()
+        //parent::find
+        find({
+            filter: {computable: true},
+            onSuccess: function()
             {
-                $scope.tSum = 0;
-                $scope.tSumC = 0;
-                $scope.tIn = 0;
-                $scope.tExpense = 0;
-                $scope.tInC = 0;
-                $scope.tExpenseC = 0;
-                angular.forEach($scope.objs, function(obj, iObj)
+                $scope.findApuntes(function()
                 {
-                    $scope.objs[iObj].sum = 0;
-                    $scope.objs[iObj].sumC = 0;
-                    $scope.objs[iObj].count = 0;
-                    $scope.objs[iObj].income = 0;
-                    $scope.objs[iObj].incomeC = 0;
-                    $scope.objs[iObj].expense = 0;
-                    $scope.objs[iObj].expenseC = 0;
-                    var ac = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: obj._id}});
-                    angular.forEach(ac, function(a, key) {
-                        $scope.objs[iObj].sum += a.importe;
-                        if (a.computable)
-                            $scope.objs[iObj].sumC += a.importe;
-                        $scope.objs[iObj].count++;
-                        if (a.importe > 0) {
-                            $scope.objs[iObj].income += a.importe;
-                            if (a.computable)
-                                $scope.objs[iObj].incomeC += a.importe;
-                        }
+                    $scope.tSum = 0;
+                    $scope.tSumC = 0;
+                    $scope.tIn = 0;
+                    $scope.tExpense = 0;
+                    $scope.tInC = 0;
+                    $scope.tExpenseC = 0;
+                    angular.forEach($scope.objs, function(obj, iObj)
+                    {
+                        $scope.objs[iObj].sum = 0;
+                        $scope.objs[iObj].sumC = 0;
+                        $scope.objs[iObj].count = 0;
+                        $scope.objs[iObj].income = 0;
+                        $scope.objs[iObj].incomeC = 0;
+                        $scope.objs[iObj].expense = 0;
+                        $scope.objs[iObj].expenseC = 0;
+                        var ac = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: obj._id}});
+                        angular.forEach(ac, function(a, key) {
+                            if (!a.deuda) {
+                                $scope.objs[iObj].sum += a.importe;
+                                if (a.computable)
+                                    $scope.objs[iObj].sumC += a.importe;
+                                $scope.objs[iObj].count++;
+                                if (a.importe > 0) {
+                                    $scope.objs[iObj].income += a.importe;
+                                    if (a.computable)
+                                        $scope.objs[iObj].incomeC += a.importe;
+                                }
 
-                        else {
-                            $scope.objs[iObj].expense += a.importe;
-                            if (a.computable)
-                                $scope.objs[iObj].expenseC += a.importe;
-                        }
+                                else {
+                                    $scope.objs[iObj].expense += a.importe;
+                                    if (a.computable)
+                                        $scope.objs[iObj].expenseC += a.importe;
+                                }
+                            }
+                        });
+                        $scope.tSum += $scope.objs[iObj].sum;
+                        $scope.tSumC += $scope.objs[iObj].sumC;
+                        $scope.tIn += $scope.objs[iObj].income;
+                        $scope.tExpense += $scope.objs[iObj].expense;
+                        $scope.tInC += $scope.objs[iObj].incomeC;
+                        $scope.tExpenseC += $scope.objs[iObj].expenseC;
                     });
-                    $scope.tSum += $scope.objs[iObj].sum;
-                    $scope.tSumC += $scope.objs[iObj].sumC;
-                    $scope.tIn += $scope.objs[iObj].income;
-                    $scope.tExpense += $scope.objs[iObj].expense;
-                    $scope.tInC += $scope.objs[iObj].incomeC;
-                    $scope.tExpenseC += $scope.objs[iObj].expenseC;
-                });
 
-            });
+                });
+            }
         });
     };
 
@@ -100,6 +106,11 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             descripcion: {
                 type: "string",
                 title: "Descripción"
+            },
+            computable: {
+                title: "Computable",
+                type: 'boolean',
+                default: true
             }
         }
     };
@@ -180,9 +191,9 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
             /* {field: 'income', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
              {field: 'expense', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},*/
 //            {field: 'sum', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'incomeC', displayName: 'In ©', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'expenseC', displayName: 'Out ©', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'sumC', displayName: 'Total ©', cellFilter: cellFilter, cellClass: 'cellNumber'}
+            {field: 'incomeC', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            {field: 'expenseC', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            {field: 'sumC', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'}
         ],
         showFooter: true,
         footerRowHeight: 30,

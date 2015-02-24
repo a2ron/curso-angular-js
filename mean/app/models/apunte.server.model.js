@@ -28,6 +28,10 @@ var ApunteSchema = new Schema({
     computable: {
         type: Boolean,
         default: true
+    },
+    deuda: {
+        type: Boolean,
+        default: false
     }
 });
 //Crear el modelo 'Apunte' a partir del esquema

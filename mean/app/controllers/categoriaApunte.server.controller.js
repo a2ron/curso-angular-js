@@ -5,10 +5,26 @@ var cbase = require('../../app/controllers/controllerBase.server.controller.js')
 var params = {
     Model: require('mongoose').model('CategoriaApunte'),
     reqModel: 'categoriaApunte',
-    acceptedData: ['titulo', 'descripcion']
+    acceptedData: ['titulo', 'descripcion', 'computable']
 };
 
 cbase.controllerBase(exports, params);
+
+exports.list = function(req, res, next)
+{
+    var filter = {};
+    if (req.param('computable') !== undefined)
+        filter.computable = req.param('computable');
+    console.log(filter);
+    params.Model.find(filter).exec(function(err, objs)
+    {
+        if (err)
+            return next(err);
+        else
+            res.json(objs);
+    });
+
+};
 
 exports.delete = function(req, res, next)
 {

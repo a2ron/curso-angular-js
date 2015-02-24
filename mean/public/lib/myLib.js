@@ -22,9 +22,9 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
         });
     };
 
-    $scope.find = function(onSuccess)
+    $scope.find = function(params)
     {
-        $scope.objs = Factory.query(onSuccess);
+        $scope.objs = Factory.query(params.filter, params.onSuccess);
     };
 
 

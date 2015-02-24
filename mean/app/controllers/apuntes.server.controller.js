@@ -4,13 +4,17 @@ var cbase = require('../../app/controllers/controllerBase.server.controller.js')
 var params = {
     Model: require('mongoose').model('Apunte'),
     reqModel: 'apunte',
-    acceptedData: ['titulo', 'descripcion', 'idCategoriaApunte', 'importe', 'computable']
+    acceptedData: ['titulo', 'descripcion', 'idCategoriaApunte', 'importe', 'computable', 'deuda']
 };
 
 
 cbase.controllerBase(exports, params);
 
-
+exports.coherencia = function(obj)
+{
+    if (obj.computable)
+        obj.deuda = false;
+}
 exports.list = function(req, res, next)
 {
     params.Model.find().populate('idCategoriaApunte').exec(function(err, objs)

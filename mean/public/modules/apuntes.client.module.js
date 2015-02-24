@@ -32,6 +32,11 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                     title: "Computable",
                     type: 'boolean',
                     default: true
+                },
+                deuda: {
+                    title: "En deuda",
+                    type: 'boolean',
+                    default: false
                 }
             }
         };
@@ -45,6 +50,15 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                 titleMap: categories
             },
             'computable',
+            {
+                "type": "conditional",
+                "condition": "!obj.computable",
+                "items": [
+                    {
+                        "key": "deuda"
+                    }
+                ]
+            },
             $scope.actionButtons
         ];
 

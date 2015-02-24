@@ -23,6 +23,10 @@ var CategoriaApunteSchema = new Schema({
         type: String,
         default: '',
         trim: true
+    },
+    computable: {
+        type: Boolean,
+        default: true
     }
 });
 //Crear el modelo 'CategoriaApunte' a partir del esquema

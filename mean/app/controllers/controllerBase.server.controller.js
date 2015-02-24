@@ -26,6 +26,10 @@ exports.controllerBase = function(exports, params)
         else
             obj = new params.Model(json);
 
+        /* Do the necessary changes for respect coherencia */
+        if (exports.coherencia)
+            exports.coherencia(obj);
+
         return obj;
     }
 
