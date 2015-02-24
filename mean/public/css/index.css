@@ -21,3 +21,7 @@ body{
 {
     text-align:right;
 }
+.ng-grid-cell-checkbox {
+    text-align: center;
+    padding:7px!important;
+}

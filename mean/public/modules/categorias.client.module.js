@@ -117,7 +117,10 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         columnDefs: [
             {field: 'idCategoriaApunte.titulo', displayName: 'Categoría'},
             {field: 'titulo', displayName: 'Título', cellLinkPath: apuntesMETA.path},
-            {field: 'descripcion', displayName: 'Descripción'},
+//            {field: 'descripcion', displayName: 'Descripción'},
+            {field: 'computable', displayName: 'Computable',
+                cellTemplate: '<div class="ng-grid-cell-checkbox"><input disabled type="checkbox" ng-model="row.entity.computable"></div>'
+            },
             {field: 'importe', displayName: 'Importe', cellFilter: cellFilter, cellClass: 'cellNumber'}
         ],
         showGroupPanel: true,
@@ -164,15 +167,19 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     {
         return col.colDef.hasOwnProperty('cellLinkPath');
     };
+    $scope.noHasCellLinkPath = function(col, v)
+    {
+        return !$scope.hasCellLinkPath(col, v);
+    };
 
     $scope.gridOptionsCategorias = {
         init: 'find()',
         data: 'objs',
         columnDefs: [
             {field: 'titulo', displayName: 'Título', cellLinkPath: categoriasApuntesMETA.path},
-            {field: 'income', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'expense', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'sum', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'},
+            /* {field: 'income', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
+             {field: 'expense', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},*/
+//            {field: 'sum', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'},
             {field: 'incomeC', displayName: 'In ©', cellFilter: cellFilter, cellClass: 'cellNumber'},
             {field: 'expenseC', displayName: 'Out ©', cellFilter: cellFilter, cellClass: 'cellNumber'},
             {field: 'sumC', displayName: 'Total ©', cellFilter: cellFilter, cellClass: 'cellNumber'}
@@ -185,10 +192,10 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
                 columns: [
                     {index: 1},
                     {index: 2},
-                    {index: 3},
-                    {index: 4},
-                    {index: 5},
-                    {index: 6}
+                    {index: 3}
+//                    {index: 4}
+//                    {index: 5},
+//                    {index: 6}
                 ]
             })
         ],
