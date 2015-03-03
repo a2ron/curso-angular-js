@@ -28,6 +28,11 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                     title: "Categoría",
                     type: 'string'
                 },
+                datetime: {
+                    title: 'Fecha',
+                    "type": "string",
+                    "format": "date"
+                },
                 computable: {
                     title: "Computable",
                     type: 'boolean',
@@ -48,6 +53,10 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                 key: "idCategoriaApunte",
                 type: 'select',
                 titleMap: categories
+            },
+            {
+                "key": "datetime",
+                "format": "dd/mm/YYYY"
             },
             'computable',
             {
@@ -112,7 +121,6 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
         loadCategorias();
     };
 
-
     $scope.find = function()
     {
         $scope.objs = apuntesFactory.query(function(res)
@@ -158,6 +166,11 @@ var params = {
             url: 'api/apuntes/filter/:idCategoriaApunte/:yearIni/:monthIni/:dayIni/:yearFin/:monthFin/:dayFin',
             method: 'GET',
             isArray: true
+        },
+        summary: {
+            url: 'api/apuntes/info/summary',
+            method: 'GET',
+            isArray: false
         }
     }
 };

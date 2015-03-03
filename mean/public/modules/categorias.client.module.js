@@ -21,6 +21,8 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         $scope.apuntes = apuntesFactory.filter(filter, onSuccess);
         $scope.apuntesFilter = [];
 
+        $scope.summary = apuntesFactory.summary();
+
     };
 
     var find = parent.find;

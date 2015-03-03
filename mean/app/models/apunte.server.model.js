@@ -8,6 +8,10 @@ var ApunteSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    datetime: {
+        type: Date,
+        default: Date.now
+    },
     titulo: {
         type: String,
         default: '',

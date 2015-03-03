@@ -29,7 +29,6 @@ exports.controllerBase = function(exports, params)
         /* Do the necessary changes for respect coherencia */
         if (exports.coherencia)
             exports.coherencia(obj);
-
         return obj;
     }
 

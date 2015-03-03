@@ -5,14 +5,14 @@
           sf-schema="schema" sf-form="form" sf-model="obj" 
           ng-submit="onSubmit(myForm)">
     </form>
-
+    
     <!-- MENSAJE DE ERROR -->
     <div data-ng-show="error" >
         <strong data-ng-bind="error"></strong>
     </div>
 
     <!--<pre>{{obj | json}}</pre>-->
-    
+
     <yield content_for="extra">
 
 </section>

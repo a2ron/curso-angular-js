@@ -1,6 +1,11 @@
 <section ng-init="find()">
-    
+
     <a class="btn btn-success" href="#!/{{path}}/crear">Añadir</a>
+
+    <button class="btn btn-primary pull-right" type="button">
+        Cuenta <span ng-bind="summary.total | number:2" class="badge"></span> €
+    </button>
+
     <hr/>
 
     <div class="row">

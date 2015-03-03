@@ -12,7 +12,8 @@ module.exports = function(app)
 {
     crudBase(cu, controller, app, path, param);
 
-
     app.route(path + '/filter/:idCategoriaApunte/:yearIni?/:monthIni?/:dayIni?/:yearFin?/:monthFin?/:dayFin?')
             .get(cu.requiresLogin, controller.listFilter);
+    app.route(path + '/info/:info')
+            .get(cu.requiresLogin, controller.info);
 };

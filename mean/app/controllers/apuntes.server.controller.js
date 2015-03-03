@@ -4,7 +4,7 @@ var cbase = require('../../app/controllers/controllerBase.server.controller.js')
 var params = {
     Model: require('mongoose').model('Apunte'),
     reqModel: 'apunte',
-    acceptedData: ['titulo', 'descripcion', 'idCategoriaApunte', 'importe', 'computable', 'deuda']
+    acceptedData: ['titulo', 'descripcion', 'idCategoriaApunte', 'importe', 'computable', 'deuda', 'datetime']
 };
 
 
@@ -17,7 +17,7 @@ exports.coherencia = function(obj)
 }
 exports.list = function(req, res, next)
 {
-    params.Model.find().populate('idCategoriaApunte').exec(function(err, objs)
+    params.Model.find().sort({createdOn: -1}).populate('idCategoriaApunte').exec(function(err, objs)
     {
         if (err)
             return next(err);
@@ -25,6 +25,39 @@ exports.list = function(req, res, next)
             res.json(objs);
         }
     });
+
+};
+
+exports.info = function(req, res, next)
+{
+    if (req.param('info') === 'summary') {
+        /**
+         * NOTE: En vez de usar aggregate, hago manualmente la sumatoria ya que hay problemas con el casting de tipos (flotantes guardados como string)
+         */
+        params.Model.find(function(err, objs)
+        {
+            if (err)
+                return next(err);
+            else {
+                var total = 0;
+                var deuda = 0;
+                for (var i in objs)
+                {
+                    var obj = objs[i];
+                    if (obj.deuda)
+                        deuda += obj.importe;
+                    else
+                        total += obj.importe;
+                }
+                var result = {
+                    total: total.toFixed(3),
+                    deuda: deuda.toFixed(3)
+                };
+                console.log(result);
+                res.json(result);
+            }
+        });
+    }
 
 };
 
@@ -73,7 +106,7 @@ exports.listFilter = function(req, res, next)
             ok = false;
     }
     if (Object.keys(filterDate).length > 0) {
-        filter.createdOn = filterDate;
+        filter.datetime = filterDate;
         console.log('Filter createdOn:');
         console.log(filter.createdOn);
     }
