@@ -118,7 +118,7 @@ exports.listFilter = function(req, res, next)
     }
     //find
     if (ok) {
-        params.Model.find(filter).populate('idCategoriaApunte').exec(function(err, objs)
+        params.Model.find(filter).sort({createdOn: -1}).exec(function(err, objs)
         {
             if (err)
                 return next(err);

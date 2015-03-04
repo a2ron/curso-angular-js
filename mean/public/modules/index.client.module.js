@@ -1,7 +1,10 @@
 angular.module('index', []).controller('IndexController', ['$scope', '$location',
     function($scope, $location)
     {
-        $scope.menu = [
+        $scope.menu = [{
+                "title": "Resumen",
+                "path": "home"
+            },
             {
                 "title": "Apuntes",
                 "path": "apuntes"
@@ -17,7 +20,7 @@ angular.module('index', []).controller('IndexController', ['$scope', '$location'
         };
 
 
-        
+
 
     }
 ]);

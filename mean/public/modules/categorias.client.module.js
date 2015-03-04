@@ -4,43 +4,54 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 {
     var parent = controllerBase($scope, $routeParams, $location, categoriasApuntesFactory, categoriasApuntesMETA);
 
+    function getView()
+    {
+        var view = null;
+        if ($location.$$path.indexOf('home') > 0)
+            view = 'home';
+        return view;
+    }
+
     $scope.apuntes = [];
     $scope.findApuntes = function(onSuccess)
     {
         var filter = {};
         filter.idCategoriaApunte = ($scope.obj) ? $scope.obj._id : 0;
 
-        filter.yearIni = $scope.ini.getFullYear();
-        filter.monthIni = $scope.ini.getMonth() + 1;
-        filter.dayIni = $scope.ini.getDate();
 
-        filter.yearFin = $scope.fin.getFullYear();
-        filter.monthFin = $scope.fin.getMonth() + 1;
-        filter.dayFin = $scope.fin.getDate();
+        if (getView() === 'home') {
+            $scope.summary = apuntesFactory.summary();
+
+            filter.yearIni = $scope.ini.getFullYear();
+            filter.monthIni = $scope.ini.getMonth() + 1;
+            filter.dayIni = $scope.ini.getDate();
+
+            filter.yearFin = $scope.fin.getFullYear();
+            filter.monthFin = $scope.fin.getMonth() + 1;
+            filter.dayFin = $scope.fin.getDate();
+        }
 
         $scope.apuntes = apuntesFactory.filter(filter, onSuccess);
         $scope.apuntesFilter = [];
 
-        $scope.summary = apuntesFactory.summary();
 
-    };
+    }
+
 
     var find = parent.find;
     $scope.find = function()
     {
+        var filter = {};
+        if (getView() === 'home')
+            filter.computable = true;
+
         //parent::find
         find({
-            filter: {computable: true},
+            filter: filter,
             onSuccess: function()
             {
                 $scope.findApuntes(function()
                 {
-                    $scope.tSum = 0;
-                    $scope.tSumC = 0;
-                    $scope.tIn = 0;
-                    $scope.tExpense = 0;
-                    $scope.tInC = 0;
-                    $scope.tExpenseC = 0;
                     angular.forEach($scope.objs, function(obj, iObj)
                     {
                         $scope.objs[iObj].sum = 0;
@@ -50,7 +61,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
                         $scope.objs[iObj].incomeC = 0;
                         $scope.objs[iObj].expense = 0;
                         $scope.objs[iObj].expenseC = 0;
-                        var ac = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: obj._id}});
+                        var ac = filterFilter($scope.apuntes, {idCategoriaApunte: obj._id});
                         angular.forEach(ac, function(a, key) {
                             if (!a.deuda) {
                                 $scope.objs[iObj].sum += a.importe;
@@ -70,12 +81,6 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
                                 }
                             }
                         });
-                        $scope.tSum += $scope.objs[iObj].sum;
-                        $scope.tSumC += $scope.objs[iObj].sumC;
-                        $scope.tIn += $scope.objs[iObj].income;
-                        $scope.tExpense += $scope.objs[iObj].expense;
-                        $scope.tInC += $scope.objs[iObj].incomeC;
-                        $scope.tExpenseC += $scope.objs[iObj].expenseC;
                     });
 
                 });
@@ -128,7 +133,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
     $scope.gridOptions = {
         data: 'apuntesFilter',
         columnDefs: [
-            {field: 'idCategoriaApunte.titulo', displayName: 'Categoría'},
+            {field: 'tituloCategoriaApunte', displayName: 'Categoría'},
             {field: 'titulo', displayName: 'Título', cellLinkPath: apuntesMETA.path},
 //            {field: 'descripcion', displayName: 'Descripción'},
             {field: 'computable', displayName: 'Computable',
@@ -189,7 +194,7 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         init: 'find()',
         data: 'objs',
         columnDefs: [
-            {field: 'titulo', displayName: 'Título', cellLinkPath: categoriasApuntesMETA.path },
+            {field: 'titulo', displayName: 'Título', cellLinkPath: categoriasApuntesMETA.path},
             /* {field: 'income', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
              {field: 'expense', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},*/
 //            {field: 'sum', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'},
@@ -209,9 +214,12 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
 
             if (row.selected)
             {
-                var showns = filterFilter($scope.apuntes, {idCategoriaApunte: {_id: row.entity._id}});
+                var showns = filterFilter($scope.apuntes, {idCategoriaApunte: row.entity._id});
+                console.log($scope.apuntes);
                 angular.forEach(showns, function(value, key) {
-                    $scope.apuntesFilter.push(showns[key]);
+                    var ap = showns[key];
+                    ap.tituloCategoriaApunte = row.entity.titulo;
+                    $scope.apuntesFilter.push(ap);
                 });
             }
             $(window).resize();//for ng-show ng-grid bug
@@ -279,8 +287,12 @@ moduleCrudBase(params)/* routes */
         .config(['$routeProvider', params.nameModule + 'METAProvider',
             function($routeProvider, META) {
                 $routeProvider.
-                        when('/' + META.params.path, {
+                        when('/home', {
                             templateUrl: 'views/listCategorias.client.view.html',
+                            controller: META.params.nameModule + 'Controller'
+                        }).
+                        when('/' + META.params.path, {
+                            templateUrl: 'views/list.client.view.html',
                             controller: META.params.nameModule + 'Controller'
                         }).
                         when('/' + META.params.path + '/crear', {

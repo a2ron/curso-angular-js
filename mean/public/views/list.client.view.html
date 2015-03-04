@@ -18,9 +18,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-class="{active: itemSel == obj._id}" class="clickable" ng-repeat="obj in objs" ng-click="changeSel(obj._id)">
+                <tr ng-class="{active: itemSel === obj._id}" class="clickable" ng-repeat="obj in objs" ng-click="changeSel(obj._id)">
                     <th>           
-                        <a ng-href="#!/{{path}}/{{obj._id}}">{{$index}}</a>
+                        <a ng-href="#!/{{path}}/{{obj._id}}">{{objs.length - $index}}</a>
                     </th>
                     <td ng-repeat="field in listFields">
                         {{obj[field.key]}}

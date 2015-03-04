@@ -110,11 +110,11 @@ function controllerBase($scope, $routeParams, $location, Factory, Meta)
     };
 
     $scope.itemSel = null;
-    $scope.changeSel = function()
+    $scope.changeSel = function(id)
     {
-        //default: nothing
-//        console.log($scope.itemSel);
+        $scope.itemSel = id;
     };
+    
     return $scope;
 
 }
