@@ -9,8 +9,7 @@ var ApunteSchema = new Schema({
         default: Date.now
     },
     datetime: {
-        type: Date,
-        default: Date.now
+        type: Date
     },
     titulo: {
         type: String,

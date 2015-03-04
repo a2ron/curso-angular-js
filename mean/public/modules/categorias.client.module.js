@@ -189,28 +189,19 @@ function categoriasController($scope, $routeParams, $location, categoriasApuntes
         init: 'find()',
         data: 'objs',
         columnDefs: [
-            {field: 'titulo', displayName: 'Título', cellLinkPath: categoriasApuntesMETA.path},
+            {field: 'titulo', displayName: 'Título', cellLinkPath: categoriasApuntesMETA.path },
             /* {field: 'income', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
              {field: 'expense', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},*/
 //            {field: 'sum', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'incomeC', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'expenseC', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber'},
-            {field: 'sumC', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber'}
+            {field: 'incomeC', displayName: 'In', cellFilter: cellFilter, cellClass: 'cellNumber', ngGridSummaryPlugin: 'sum'},
+            {field: 'expenseC', displayName: 'Out', cellFilter: cellFilter, cellClass: 'cellNumber', ngGridSummaryPlugin: 'sum'},
+            {field: 'sumC', displayName: 'Total', cellFilter: cellFilter, cellClass: 'cellNumber', ngGridSummaryPlugin: 'sum'}
         ],
         showFooter: true,
         footerRowHeight: 30,
         plugins: [
             new ngGridFlexibleHeightPlugin(),
-            new ngGridSummaryPlugin({
-                columns: [
-                    {index: 1},
-                    {index: 2},
-                    {index: 3}
-//                    {index: 4}
-//                    {index: 5},
-//                    {index: 6}
-                ]
-            })
+            new ngGridSummaryPlugin()
         ],
         //Callback for when you want to validate something after selection.
         afterSelectionChange: function(row) {

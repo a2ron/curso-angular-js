@@ -2,6 +2,19 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
 {
     controllerBase($scope, $routeParams, $location, apuntesFactory, apuntesMETA);
 
+
+    $scope.fin = new Date();
+    $scope.ini = new Date($scope.fin.getFullYear(), $scope.fin.getMonth(), 1);
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
     var categories = [];
     function defSchema()
     {
@@ -55,8 +68,7 @@ function apuntesController($scope, $routeParams, $location, categoriasApuntesFac
                 titleMap: categories
             },
             {
-                "key": "datetime",
-                "format": "dd/mm/YYYY"
+                "key": "datetime"
             },
             'computable',
             {

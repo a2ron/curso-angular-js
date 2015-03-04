@@ -1,5 +1,8 @@
 <div class="{{gridId}} ngFooterPanel">
-   
-    <div  id="as"  ng-class="col.colIndex()" ng-repeat="col in renderedColumns" class='{{col.cellClass}} ngCell'><div class='ngCellText'><span ng-bind="ngGridSummaryPlugin.values[{{col.index}}] | {{col.cellFilter}}"></span></div></div>
+
+    <div  id="as"  ng-class="col.colIndex()" ng-repeat="col in renderedColumns" class='{{col.cellClass}} ngCell'><div class='ngCellText'>
+            <span ng-if="col.cellFilter" ng-bind="ngGridSummaryPlugin.values[{{col.index}}] | {{col.cellFilter}}"></span>
+            <span ng-if="!col.cellFilter" ng-bind="ngGridSummaryPlugin.values[{{col.index}}]"></span>
+        </div></div>
 
 </div>

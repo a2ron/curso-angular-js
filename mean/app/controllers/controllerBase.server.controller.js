@@ -66,6 +66,7 @@ exports.controllerBase = function(exports, params)
 
     exports.read = function(req, res)
     {
+        console.log(req[params.reqModel]);
         res.json(req[params.reqModel]);
     };
 

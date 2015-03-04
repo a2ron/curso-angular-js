@@ -15,7 +15,6 @@ exports.list = function(req, res, next)
     var filter = {};
     if (req.param('computable') !== undefined)
         filter.computable = req.param('computable');
-    console.log(filter);
     params.Model.find(filter).exec(function(err, objs)
     {
         if (err)

@@ -14,7 +14,7 @@ exports.coherencia = function(obj)
 {
     if (obj.computable)
         obj.deuda = false;
-}
+};
 exports.list = function(req, res, next)
 {
     params.Model.find().sort({createdOn: -1}).populate('idCategoriaApunte').exec(function(err, objs)
@@ -106,9 +106,15 @@ exports.listFilter = function(req, res, next)
             ok = false;
     }
     if (Object.keys(filterDate).length > 0) {
-        filter.datetime = filterDate;
-        console.log('Filter createdOn:');
-        console.log(filter.createdOn);
+        filter = {
+            $or: [
+                {$and: [{datetime: null}, {createdOn: filterDate}]},
+                {datetime: filterDate}
+            ]
+        };
+
+        console.log('Filter: ');
+        console.log(filter);
     }
     //find
     if (ok) {
